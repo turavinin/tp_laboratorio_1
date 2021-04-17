@@ -6,4 +6,6 @@
  * */
 void mostrarMensaje(char* mensaje);
 
+void mostrarError(char* mensaje);
+
 #endif /* MENSAJESENCONSOLA_H_ */

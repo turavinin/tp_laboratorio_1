@@ -30,7 +30,8 @@ int main(void) {
 	int resultadoResta;
 	float resultadoDivision;
 	int resultadoMultip;
-	float resultadoFactorial;
+	int resultadoFactorialUno;
+	int resultadoFactorialDos;
 
 	mostrarMensaje("¡Bienvenido al Calculador 3000!\nTodos tus calculos se harán realidad.\n\n");
 
@@ -45,7 +46,7 @@ int main(void) {
 		{
 			switch(opcionMenu)
 			{
-				case 1:
+				case 1: // Operando 1
 					if(banderaOperandoPrimero)
 					{
 						printf("\n----- Elección errónea: ya ingreso el primero operando -----\n");
@@ -59,7 +60,7 @@ int main(void) {
 					}
 					break;
 
-				case 2:
+				case 2: // Operando 2
 					if(!banderaOperandoPrimero)
 					{
 						printf("\n----- Elección errónea: primero debe ingresar el primer operando -----\n");
@@ -79,7 +80,7 @@ int main(void) {
 					}
 					break;
 
-				case 3:
+				case 3: // Operaciones
 					if(!banderaOperandoPrimero || !banderaOperandoSegundo)
 					{
 						printf("\n----- Elección errónea: primero debe ingresar los operandos -----\n");
@@ -92,17 +93,56 @@ int main(void) {
 					}
 					else
 					{
+						limitarIncorrectas = OPCIONES_INCORRECTAS_MAXIMAS;
+
 						sumInt(&resultadoSuma, operandoPrimero, operandoSegundo);
 						restInt(&resultadoResta, operandoPrimero, operandoSegundo);
 						exitoFuncionDivision = divInt(&resultadoDivision, operandoPrimero, operandoSegundo);
 						multiInt(&resultadoMultip, operandoPrimero, operandoSegundo);
+						resultadoFactorialUno = factorialInt(operandoPrimero);
+						resultadoFactorialDos = factorialInt(operandoSegundo);
 
-
-
-
+						banderaCalculos = 1;
 					}
-				} // Termina switch
-			} // Sale del if
+					break;
+				case 4: // Resultados
+					if(!banderaCalculos)
+					{
+						printf("\n----- Elección errónea: Primero debe hacer los cálculos -----\n");
+						limitarIncorrectas--;
+					}
+					else if(banderaResultado)
+					{
+						printf("\n----- Elección errónea: Ya le mostramos los resultados. Salga por amor a Gates. -----\n");
+						limitarIncorrectas--;
+					}
+					else
+					{
+						printf("Resultado de %d + %d es: %d\n", operandoPrimero, operandoSegundo, resultadoSuma);
+						printf("Resultado de %d - %d es: %d\n", operandoPrimero, operandoSegundo, resultadoResta);
+
+						if(!exitoFuncionDivision)
+						{
+							printf("No se puede dividir por 0\n");
+						}
+						else
+						{
+							printf("Resultado de %d / %d es: %.1f\n", operandoPrimero, operandoSegundo, resultadoDivision);
+						}
+
+						printf("Resultado de %d x %d es: %d\n", operandoPrimero, operandoSegundo, resultadoMultip);
+
+						printf("El factorial de %d es %d\n", operandoPrimero, resultadoFactorialUno);
+						printf("El factorial de %d es %d\n", operandoSegundo, resultadoFactorialDos);
+
+						banderaResultado = 1;
+					}
+					break;
+				case 5: // Salida
+					printf("¡¡Vuelvas prontos!!");
+					break;
+				}
+			}
 
 		// Resta de los limites de incorrectas en caso de que los llamados de funciones devuelvan 0.
 		if (exitoFuncion == 0)
@@ -122,7 +162,6 @@ int main(void) {
 		}
 
 	}while(opcionMenu != 5);
-
 
 
 	return EXIT_SUCCESS;

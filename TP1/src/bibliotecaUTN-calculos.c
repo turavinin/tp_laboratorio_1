@@ -16,7 +16,7 @@ int sumInt(int* pResultado, int numeroUno, int numeroDos)
 
 int restInt(int* pResultado, int numeroUno, int numeroDos)
 {
-	*pResultado = numeroUno + numeroDos;
+	*pResultado = numeroUno - numeroDos;
 	return 1;
 }
 
@@ -38,7 +38,21 @@ int multiInt(int* pResultado, int numeroUno, int numeroDos)
 	return 1;
 }
 
+int factorialInt(int numero)
+{
+	int resultado;
 
+	if(numero == 1 || numero == 0)
+	{
+		resultado = 1;
+	}
+	else
+	{
+		resultado = numero * factorialInt(numero - 1);
+	}
+
+	return resultado;
+}
 
 
 

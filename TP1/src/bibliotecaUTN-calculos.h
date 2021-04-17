@@ -41,5 +41,11 @@ int divInt(float* pResultado, int numeroUno, int numeroDos);
  * */
 int multiInt(int* pResultado, int numeroUno, int numeroDos);
 
+/**
+ * \brief Toma el numero y le saca el factorial.
+ * \param (numero) El numero al que se le realiza el factorial.
+ * \return Resultado del factorial.
+ * */
+int factorialInt(int numero);
 
 #endif /* BIBLIOTECAUTN_CALCULOS_H_ */
