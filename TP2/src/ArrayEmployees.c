@@ -90,21 +90,21 @@ int eEmployee_Alta(Employee* eArr, int largoArr, int* existenciaProxLibre)
 		float salario;
 		int sector;
 
-		printf("\n| AGREGAR EMPLEADO ------------------------|\n");
+		printf("\n| AGREGAR EMPLEADO ------------------------|");
 		if(utn_getStringLimited(nombre,
-				               "| Ingrese el nombre: ",
-							   "\n| -- Error de carga //",
+				               "\n| Ingrese el nombre: ",
+							   "| -- Ingreso incorrecto --\n",
 							   MAX_CHAR_CADENAS, MAX_ERRORES) == 0 &&
 		utn_getStringLimited(apellido,
 				            "| Ingrese el apellido: ",
-							"\n| -- Error de carga //",
+							"| -- Ingreso incorrecto --\n",
 							MAX_CHAR_CADENAS, MAX_ERRORES) == 0 &&
 		utn_getFloat(&salario,
 				     "| Ingrese el salario: ",
-					 "\n| -- Error de carga //", MAX_ERRORES) == 0 &&
+					 "| -- Ingreso incorrecto --\n", MAX_ERRORES) == 0 &&
 		utn_getNumber(&sector,
 				      "| Ingrese el sector: ",
-					  "\n| -- Error de carga //",
+					  "| -- Ingreso incorrecto --\n",
 					  MAX_ERRORES) == 0)
 		{
 			int id;
@@ -227,16 +227,16 @@ int editEmployee(Employee* eArr, int largoArr)
 					            		"\n|--------------------------------------------|"
 										"\n| Selecciones una opcion: ",
 										"\n|          // OPCION INCORRECTA //           |",
-										0, 4, 3);
+										0, 4, MAX_ERRORES);
 
 			if(exito == 0 && opcionModificar != 0)
 			{
 				printEmployeesTable(eArr, largoArr, 1);
 				exito = getIdEmployee(&idEmployee,
 									       "\n| Ingrese el ID del empleado: ",
-						                   "\n| -- Error.",
+						                   "| -- Error.",
 										   "\n\n    // NO SE ENCONTRO AL EMPLEADO BUSCADO //\n\n",
-										   eArr, largoArr, 3);
+										   eArr, largoArr, MAX_ERRORES);
 				if(exito == 0)
 				{
 					findEmployeeById(eArr, largoArr, idEmployee, &posicionEmployee);
@@ -245,30 +245,34 @@ int editEmployee(Employee* eArr, int largoArr)
 						case 1:
 							editNameEmployee(eArr,
 											"\n| Ingrese el nuevo nombre del empleado: ",
-											"\n| -- Error.",
+											"| -- Error.",
 											"\n\n    // NO FUE POSIBLE EDITAR EL NOMBRE. INTENE DE NUEVO. //\n\n",
-											MAX_CHAR_CADENAS, 3, posicionEmployee);
+											MAX_CHAR_CADENAS, MAX_ERRORES, posicionEmployee);
+							opcionModificar = 0;
 							break;
 						case 2:
 							editLastNameEmployee(eArr,
 											     "\n| Ingrese el nuevo apellido del empleado: ",
-												 "\n| -- Error.",
+												 "| -- Error.",
 												 "\n\n    // NO FUE POSIBLE EDITAR EL APELLIDO. INTENE DE NUEVO. //\n\n",
-												 MAX_CHAR_CADENAS, 3, posicionEmployee);
+												 MAX_CHAR_CADENAS, MAX_ERRORES, posicionEmployee);
+							opcionModificar = 0;
 							break;
 						case 3:
 							editSalaryEmployee(eArr,
 										      "\n| Ingrese el nuevo salario del empleado: ",
-											  "\n| -- Error.",
+											  "| -- Error.",
 											  "\n\n    // NO FUE POSIBLE EDITAR EL SALARIO. INTENE DE NUEVO. //\n\n",
-											  3, posicionEmployee);
+											  MAX_ERRORES, posicionEmployee);
+							opcionModificar = 0;
 							break;
 						case 4:
 							editSectorEmployee(eArr,
 									          "\n| Ingrese el nuevo sector del empleado: ",
-											  "\n| -- Error.",
+											  "| -- Error.",
 											  "\n\n    // NO FUE POSIBLE EDITAR EL SECTOR. INTENE DE NUEVO. //\n\n",
-											  3, posicionEmployee);
+											  MAX_ERRORES, posicionEmployee);
+							opcionModificar = 0;
 							break;
 					}
 				}
@@ -278,6 +282,10 @@ int editEmployee(Employee* eArr, int largoArr)
 		if(exito != 0)
 		{
 			printf("\n\n    // NO FUE POSIBLE MODIFICAR AL EMPLEADO //\n\n");
+		}
+		else
+		{
+			printf("| EL EMPLEADO FUE EDITADO CORRECTAMENTE.\n\n");
 		}
 	}
 	else
@@ -391,21 +399,21 @@ int eEmployee_Baja(Employee* eArr, int largoArr)
 		if(existenEmpleados == 0)
 		{
 			printEmployeesTable(eArr, largoArr, 1);
-			printf("\n--- BAJA DE EMPLEADO ---");
+			printf("\n| BAJA DE EMPLEADO");
 			exito = getIdEmployee(&auxId,
-								  "\n    Ingrese ID del Empleado: ",
-								  "    --Error.",
-								  "    // NO SE ENCONTRO AL EMPLEADO //\n",
+								  "\n| Ingrese ID del Empleado: ",
+								  "\n| --Error.",
+								  "\n\n    // NO SE ENCONTRO AL EMPLEADO EN LA BASE //\n\n",
 								  eArr, largoArr, 3);
 			if(exito == 0)
 			{
 				removeEmployee(eArr, largoArr, auxId);
-				printf("    // SE ELIMINO AL EMPLEADO CORRECTAMENTE //\n");
+				printf("| SE ELIMINO AL EMPLEADO CORRECTAMENTE //\n");
 			}
 		}
 		else
 		{
-			printf("\n\n    // NO SE ENCONTRO EMPLEADOS EN LA BASE //\n\n");
+			printf("\n\n    // NO SE ENCONTRO EMPLEADOS EN LA BASE.\n\n");
 		}
 	}
 
@@ -485,7 +493,6 @@ int obtenerTotalSalarios(Employee* eArr, int largoArr, float* totalSalarios, flo
 			}
 		}
 
-		printf("\n\n Mostrame total salario %.1f", auxTotal);
 		*totalSalarios = auxTotal;
 		*promedioSalarios = auxTotal / auxCont;
 		exitoFuncion = 0;
@@ -537,7 +544,7 @@ int printEmployees(Employee* eArr, int largoArr, int orden)
 	    sortEmployees(eArr, largoArr, orden);
 
 	    // int w[MAX_COL] = {15, 15, 15, 15, 15}; // Para imprimir columna se establece arriba
-	    printf("\nTABLA EMPLEADOS");
+	    printf("\n|TABLA EMPLEADOS");
 	    printf("\n|%-*s|%-*s|%-*s|%-*s|%-*s|\n", w[0],"ID", w[1],"NOMBRE", w[2],"APELLIDO", w[3],"SALARIO", w[4],"SECTOR");
 	    int i;
 	    for(i = 0; i < largoArr; i++)
@@ -547,7 +554,7 @@ int printEmployees(Employee* eArr, int largoArr, int orden)
 	    		printEmployee(eArr[i]);
 	    	}
 	    }
-	    printf("\n\nINFORMACION SOBRE SALARIOS");
+	    printf("\n\n|INFORMACION SOBRE SALARIOS");
 	    printf("\n|%-*s|%-*s|%-*s\n", w[0],"TOTAL SALARIOS", w[1],"PROM. SALARIOS", w[2],"CANT.EMPLEADOS QUE SUPERAN PROMEDIO");
 	    printf("|%-*.2f|%-*.2f|%-*d\n", w[0], salarios, w[1], promedio, w[2], cantEmpleadosMayor);
 
@@ -569,7 +576,7 @@ int printEmployeesTable(Employee* eArr, int largoArr, int orden)
 	if(existenEmpleados == 0)
 	{
 		// int w[MAX_COL] = {15, 15, 15, 15, 15}; // Para imprimir columna se establece arriba
-		printf("\nTABLA EMPLEADOS");
+		printf("\n|TABLA EMPLEADOS");
 		printf("\n|%-*s|%-*s|%-*s|%-*s|%-*s|\n", w[0],"ID", w[1],"NOMBRE", w[2],"APELLIDO", w[3],"SALARIO", w[4],"SECTOR");
 		int i;
 		for(i = 0; i < largoArr; i++)

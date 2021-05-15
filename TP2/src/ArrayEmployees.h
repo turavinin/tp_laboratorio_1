@@ -9,7 +9,7 @@
 
 
 // DEFINE
-#define MAX_CHAR_CADENAS 50
+#define MAX_CHAR_CADENAS 51
 #define MAX_ERRORES 3
 #define MAX_COL 5
 

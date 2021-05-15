@@ -57,7 +57,13 @@ int main(void) {
 						exitoFuncion = eEmployee_Alta(arrEmpleado, LARGO_ARR, &existeProximoLibre);
 						if(existeProximoLibre != -1 && exitoFuncion == 0)
 						{
-							utn_getCharDosOpciones(&salida, "|¿Desea agregar otro empleado? (S / N): ", "Error.", 's', 'n', 3);
+							exitoFuncion = utn_getCharDosOpciones(&salida, "|¿Desea agregar otro empleado? (S / N): ",
+										                    "| -- Ingreso incorrecto --\n",
+															's', 'n', 3);
+							if(exitoFuncion != 0)
+							{
+								salida = 'n';
+							}
 						}
 						else
 						{
