@@ -37,14 +37,18 @@ int addEmployees(Employee* eArr, int largoArr, int id, char name[], char lastNam
 int eEmployee_Alta(Employee* eArr, int largoArr, int* existenciaProxLibre);
 // Buscar employee
 int findEmployeeById(Employee* eArr, int largoArr, int idEmployee, int* pPosicionEmployee);
+int getIdEmployee(int* idEmployee, char* mensaje, char* mensajeError, char* mensajeNoEncontrado, Employee* eArr, int largoArr, int maxErrores);
+int checkEmployeeArr(Employee* eArr, int largoArr);
 // Eliminar employee
 int removeEmployee(Employee* eArr, int largoArr, int idEmployee);
+int eEmployee_Baja(Employee* eArr, int largoArr);
 // Sort
 void swapEmployees(Employee* eArr, int primeraPos, int segundaPos);
 int sortEmployees(Employee* eArr, int largoArr, int order);
 // PRINT
 void printEmployee(Employee employee);
 int printEmployees(Employee* eArr, int largoArr, int orden);
+int printEmployeesTable(Employee* eArr, int largoArr, int orden);
 
 int obtenerTotalSalarios(Employee* eArr, int largoArr, float* totalSalarios, float* promedioSalarios);
 int obtenerEmpleadosMayorSalario(Employee* eArr, int largoArr, int* contEmpleadosMayorSalario, int promedioSalarios);

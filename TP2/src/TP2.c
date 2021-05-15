@@ -37,13 +37,14 @@ int main(void) {
 	do
 	{
 		exitoFuncion = utn_getNumberLimited(&opcionMenu,
-				"\n--------------- MENU --------------- "
-				"\n 1. ALTAS"
-				"\n 2. MODIFICAR"
-				"\n 3. BAJA"
-				"\n 4. INFORMAR"
-				"\nSeleccione una opción (Ingrese su numero): ",
-				"\n--- ¡LA OPCION INGRESADA ES INCORRECTA! --- \n",
+				"\n|-----------------------MENU-------------------------|"
+				"\n| 1. ALTAS                                           |"
+				"\n| 2. MODIFICAR                                       |"
+				"\n| 3. BAJA                                            |"
+				"\n| 4. INFORMAR                                        |"
+				"\n|----------------------------------------------------|"
+				"\n| Seleccione una opción (Ingrese su número): ",
+				"\n|    --- ¡LA OPCION INGRESADA ES INCORRECTA! ---     |",
 				1, 9, 3);
 
 		if(exitoFuncion == 0)
@@ -53,10 +54,10 @@ int main(void) {
 				case 1:
 					do
 					{
-						eEmployee_Alta(arrEmpleado, LARGO_ARR, &existeProximoLibre);
-						if(existeProximoLibre != -1)
+						exitoFuncion = eEmployee_Alta(arrEmpleado, LARGO_ARR, &existeProximoLibre);
+						if(existeProximoLibre != -1 && exitoFuncion == 0)
 						{
-							utn_getCharDosOpciones(&salida, "¿Desea seguir? (S / N): ", "Error.", 's', 'n', 3);
+							utn_getCharDosOpciones(&salida, "    ¿Desea agregar otro empleado? (S / N): ", "Error.", 's', 'n', 3);
 						}
 						else
 						{
@@ -67,7 +68,7 @@ int main(void) {
 				case 2:
 					break;
 				case 3:
-
+					eEmployee_Baja(arrEmpleado, LARGO_ARR);
 					break;
 				case 4:
 					printEmployees(arrEmpleado, LARGO_ARR, 1);
