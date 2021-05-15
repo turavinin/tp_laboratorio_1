@@ -44,8 +44,8 @@ int main(void) {
 				"\n| 4. INFORMAR                                        |"
 				"\n|----------------------------------------------------|"
 				"\n| Seleccione una opción (Ingrese su número): ",
-				"\n|    --- ¡LA OPCION INGRESADA ES INCORRECTA! ---     |",
-				1, 9, 3);
+				"\n|    --- ¡LA OPCION INGRESADA ES INCORRECTA! ---     |\n",
+				1, 4, 3);
 
 		if(exitoFuncion == 0)
 		{
@@ -57,7 +57,7 @@ int main(void) {
 						exitoFuncion = eEmployee_Alta(arrEmpleado, LARGO_ARR, &existeProximoLibre);
 						if(existeProximoLibre != -1 && exitoFuncion == 0)
 						{
-							utn_getCharDosOpciones(&salida, "    ¿Desea agregar otro empleado? (S / N): ", "Error.", 's', 'n', 3);
+							utn_getCharDosOpciones(&salida, "|¿Desea agregar otro empleado? (S / N): ", "Error.", 's', 'n', 3);
 						}
 						else
 						{
@@ -66,6 +66,7 @@ int main(void) {
 					}while(salida != 'n');
 					break;
 				case 2:
+					editEmployee(arrEmpleado, LARGO_ARR);
 					break;
 				case 3:
 					eEmployee_Baja(arrEmpleado, LARGO_ARR);

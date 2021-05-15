@@ -9,7 +9,7 @@
 
 
 // DEFINE
-#define MAX_CHAR_CADENAS 51
+#define MAX_CHAR_CADENAS 50
 #define MAX_ERRORES 3
 #define MAX_COL 5
 
@@ -52,4 +52,11 @@ int printEmployeesTable(Employee* eArr, int largoArr, int orden);
 
 int obtenerTotalSalarios(Employee* eArr, int largoArr, float* totalSalarios, float* promedioSalarios);
 int obtenerEmpleadosMayorSalario(Employee* eArr, int largoArr, int* contEmpleadosMayorSalario, int promedioSalarios);
+
+// EDITAR
+int editNameEmployee(Employee* employee, char* mensajePrimero, char* error, char* errorFinal, int maxChar, int erroresMaximos, int posicion);
+int editLastNameEmployee(Employee* employee, char* mensajePrimero, char* error, char* errorFinal, int maxChar, int erroresMaximos, int posicion);
+int editSalaryEmployee(Employee* employee, char* mensajePrimero, char* error, char* errorFinal, int erroresMaximos, int posicion);
+int editSectorEmployee(Employee* employee, char* mensajePrimero, char* error, char* errorFinal, int erroresMaximos, int posicion);
+int editEmployee(Employee* eArr, int largoArr);
 #endif /* ARRAYEMPLOYEES_H_ */
