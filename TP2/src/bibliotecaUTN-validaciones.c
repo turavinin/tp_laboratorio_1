@@ -7,7 +7,7 @@
 // INT
 int isNumerical(char* cadena)
 {
-	int exitoFuncion = 1;
+	int exitoFuncion = 0;
 
 	int i = 0;
 	if(cadena != NULL && strlen(cadena) > 0)
@@ -16,7 +16,7 @@ int isNumerical(char* cadena)
 		{
 			if(cadena[i] < '0' || cadena[i] > '9')
 			{
-				exitoFuncion = 0;
+				exitoFuncion = -1;
 				break;
 			}
 			i++;
@@ -27,13 +27,13 @@ int isNumerical(char* cadena)
 }
 int getInt(int* pResultado)
 {
-	int exitoFuncion = 0;
+	int exitoFuncion = -1;
 	char buffer[64];
 	scanf("%s", buffer);
-	if(isNumerical(buffer))
+	if(isNumerical(buffer) == 0)
 	{
 		*pResultado = atoi(buffer);
-		exitoFuncion = 1;
+		exitoFuncion = 0;
 	}
 
 	return exitoFuncion;
@@ -46,7 +46,7 @@ int utn_getNumberLimited(int* pNumero, char* mensaje, char* mensajeError, int nu
 	while(reintentosMaximos > 0)
 	{
 		printf(mensaje);
-		if(getInt(&numero))
+		if(getInt(&numero) == 0)
 		{
 			if(numero <= numeroMaximo && numero >= numeroMinimo)
 			{
@@ -68,13 +68,13 @@ int utn_getNumberLimited(int* pNumero, char* mensaje, char* mensajeError, int nu
 }
 int utn_getNumber(int* pNumero, char* mensaje, char* mensajeError, int reintentosMaximos)
 {
-	int exitoFuncion = 0;
+	int exitoFuncion = -1;
 	int numero;
 
 	while(reintentosMaximos > 0)
 	{
 		printf(mensaje);
-		if(getInt(&numero))
+		if(getInt(&numero) == 0)
 		{
 				break;
 		}
@@ -85,7 +85,7 @@ int utn_getNumber(int* pNumero, char* mensaje, char* mensajeError, int reintento
 
 	if(reintentosMaximos > 0)
 	{
-		exitoFuncion = 1;
+		exitoFuncion = 0;
 		*pNumero = numero;
 	}
 
@@ -197,15 +197,16 @@ int utn_getCharDosOpciones(char* pChar, char* mensajeConOpciones, char* mensajeE
 	opcionDos = tolower(opcionDos);
 
 	printf(mensajeConOpciones);
-	scanf("%c", &letra);
 	fflush(stdin);
+	scanf("%c", &letra);
 	letra = tolower(letra);
 
 	while(letra != opcionUno && letra != opcionDos && errores < reintentosMaximos)
 	{
 		printf(mensajeError);
-		scanf("%c", &letra);
+		printf(mensajeConOpciones);
 		fflush(stdin);
+		scanf("%c", &letra);
 		letra = tolower(letra);
 		errores++;
 	}
@@ -233,15 +234,15 @@ int utn_getCharTresOpciones(char* pChar, char* mensajeConOpciones, char* mensaje
 		opcionTres = tolower(opcionTres);
 
 		printf(mensajeConOpciones);
-		scanf("%c", &letra);
 		fflush(stdin);
+		scanf("%c", &letra);
 		letra = tolower(letra);
 
 		while(letra != opcionUno && letra != opcionDos && letra != opcionTres && errores < reintentosMaximos)
 		{
 			printf(mensajeError);
-			scanf("%c", &letra);
 			fflush(stdin);
+			scanf("%c", &letra);
 			letra = tolower(letra);
 			errores++;
 		}
@@ -318,6 +319,7 @@ int utn_getStringLimited(char* pString, char* mensaje, char* mensajeError, int m
 	while((strlen(auxString) > maximosCaracteres || esStringAlpha(auxString) == -1) && errores <= maximosErrores)
 	{
 		printf(mensajeError);
+		printf(mensaje);
 		fflush(stdin);
 		errores++;
 		gets(auxString);
@@ -343,6 +345,7 @@ int utn_getStringCompuesto(char* pString, char* msj, char* msjError, int maxChar
 	while((strlen(auxString) > maxChar || esStringAlphaCompuesto(auxString) == -1) && maxErr > 0)
 		{
 			printf(msjError);
+			printf(msj);
 			fflush(stdin);
 			maxErr--;
 			gets(auxString);
