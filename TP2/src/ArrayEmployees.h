@@ -158,7 +158,7 @@ int editSectorEmployee(Employee* employee, char* message, char* errorMessage, ch
  * \param (size) int
  * \return 0 (= true) and -1 (=false)
  **/
-int editEmployee(Employee* eArr, int size);
+int eEmployee_Edit(Employee* eArr, int size);
 
 /**
  * \brief Removes employee

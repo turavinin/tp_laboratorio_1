@@ -160,6 +160,7 @@ int eEmployee_Create(Employee* eArr, int size)
 int findEmployeeById(Employee* eArr, int size, int idEmployee, int* employeePosition)
 {
 	int functionSuccess = -1;
+	int auxPos;
 
 	if(eArr != NULL && size > 0)
 	{
@@ -168,8 +169,10 @@ int findEmployeeById(Employee* eArr, int size, int idEmployee, int* employeePosi
 		{
 			if(eArr[i].id == idEmployee)
 			{
-				*employeePosition = i;
+				auxPos = i;
+				*employeePosition = auxPos;
 				functionSuccess = 0;
+				break;
 			}
 		}
 	}
@@ -295,7 +298,7 @@ int editSectorEmployee(Employee* employee, char* message, char* errorMessage, ch
 
 	return functionSuccess;
 }
-int editEmployee(Employee* eArr, int size)
+int eEmployee_Edit(Employee* eArr, int size)
 {
 	int functionSuccess = -1;
 	int localSuccess;

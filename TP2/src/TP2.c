@@ -44,7 +44,7 @@ int main(void) {
 					eEmployee_Create(arrEmpleado, LARGO_ARR);
 					break;
 				case 2:
-					editEmployee(arrEmpleado, LARGO_ARR);
+					eEmployee_Edit(arrEmpleado, LARGO_ARR);
 					break;
 				case 3:
 					eEmployee_Delete(arrEmpleado, LARGO_ARR);
