@@ -34,7 +34,7 @@ int initEmployees(Employee* eArr, int largoArr);
 int eEmployee_SearchEmpty(Employee* eArr, int largoArr, int* posLibre);
 // Alta employee
 int addEmployees(Employee* eArr, int largoArr, int id, char name[], char lastName[], float salary, int sector, int posLibre);
-int eEmployee_Alta(Employee* eArr, int largoArr, int* existenciaProxLibre);
+int eEmployee_Alta(Employee* eArr, int largoArr);
 // Buscar employee
 int findEmployeeById(Employee* eArr, int largoArr, int idEmployee, int* pPosicionEmployee);
 int getIdEmployee(int* idEmployee, char* mensaje, char* mensajeError, char* mensajeNoEncontrado, Employee* eArr, int largoArr, int maxErrores);

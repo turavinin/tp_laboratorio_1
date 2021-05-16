@@ -75,7 +75,7 @@ int addEmployees(Employee* eArr, int largoArr, int id, char* name, char* lastNam
 
 	return exitoFuncion;
 }
-int eEmployee_Alta(Employee* eArr, int largoArr, int* existenciaProxLibre)
+/*int eEmployee_AltaVIEJO(Employee* eArr, int largoArr, int* existenciaProxLibre)
 {
 	int exitoFuncion = -1;
 	int posLibre;
@@ -130,7 +130,128 @@ int eEmployee_Alta(Employee* eArr, int largoArr, int* existenciaProxLibre)
 	}
 
 	return exitoFuncion;
+}*/
+
+int eEmployee_Alta(Employee* eArr, int largoArr)
+{
+	int exitoFuncion = -1;
+	int exito = -1;
+	int posLibre = -1;
+	int proxLibre = -1;
+	char opcionSalida = 'n';
+
+
+	do{
+		exito = eEmployee_SearchEmpty(eArr, largoArr, &posLibre);
+		if(exito == 0)
+		{
+			exito = -1;
+			// Variables auxiliares datos
+			char auxNombre[MAX_CHAR_CADENAS];
+			char auxApellido[MAX_CHAR_CADENAS];
+			float auxSalario;
+			int auxSector;
+
+			printf("\n| AGREGAR EMPLEADO ------------------------|");
+			if(utn_getStringLimited(auxNombre,
+					"\n| Ingrese el nombre: ",
+					"| -- Ingreso incorrecto --\n",
+					MAX_CHAR_CADENAS, MAX_ERRORES) == 0 &&
+					utn_getStringLimited(auxApellido,
+							"| Ingrese el apellido: ",
+							"| -- Ingreso incorrecto --\n",
+							MAX_CHAR_CADENAS, MAX_ERRORES) == 0 &&
+							utn_getFloat(&auxSalario,
+									"| Ingrese el salario: ",
+									"| -- Ingreso incorrecto --\n", MAX_ERRORES) == 0 &&
+									utn_getNumber(&auxSector,
+											"| Ingrese el sector: ",
+											"| -- Ingreso incorrecto --\n",
+											MAX_ERRORES) == 0)
+			{
+				int id;
+				eEmployee_SetId(&id);
+				exito = addEmployees(eArr, largoArr, id, auxNombre, auxApellido, auxSalario, auxSector, posLibre);
+				exitoFuncion = 0;
+			}
+
+			if(exito == 0)
+			{
+				exito = eEmployee_SearchEmpty(eArr, largoArr, &proxLibre);
+				if(exito == 0)
+				{
+					exito = utn_getCharDosOpciones(&opcionSalida, "|¿Desea agregar otro empleado? (S / N): ",
+							"| -- Ingreso incorrecto --\n",
+							's', 'n', 3);
+					if(exito != 0)
+					{
+						opcionSalida = 'n';
+					}
+
+				}
+			}
+			else
+			{
+				exitoFuncion = -1;
+			}
+
+		}
+
+	} while(opcionSalida != 'n' && exito == 0);
+
+	if(posLibre == -1)
+	{
+		printf("\n// ¡ESPACIO EN LA BASE INSUFICIENTE!  //");
+	}
+
+	if(exitoFuncion != 0)
+	{
+		printf("\n// ¡NO SE PUDO INGRESAR EMPLEADO!  //\n");
+	}
+
+	return exitoFuncion;
+
+
+/*
+
+
+
+
+		if(exito == 0)
+		{
+
+
+			if(exito == 0)
+			{
+				exito = eEmployee_SearchEmpty(eArr, largoArr, &auxProxLibre);
+				if(auxProxLibre != -1 && exito == 0)
+				{
+					exito = utn_getCharDosOpciones(&salida, "|¿Desea agregar otro empleado? (S / N): ",
+							"| -- Ingreso incorrecto --\n",
+							's', 'n', 3);
+					if(exito != 0)
+					{
+						salida = 'n';
+					}
+				}
+				else
+				{
+					salida = 'n';
+				}
+			}
+
+		}
+
+	} while (salida != 'n' && exito != -1);*/
+
+/*	if(exitoFuncion != 0)
+	{
+		printf("\n// ¡NO SE PUDO INGRESAR EMPLEADO!  //\n");
+	}*/
+
 }
+
+
 
 // FIND EMPLEADO
 int findEmployeeById(Employee* eArr, int largoArr, int idEmployee, int* pPosicionEmployee)

@@ -16,7 +16,7 @@
 #include "bibliotecaUTN-validaciones.h"
 #include "ArrayEmployees.h"
 
-#define LARGO_ARR 3
+#define LARGO_ARR 1
 
 
 int main(void) {
@@ -25,8 +25,6 @@ int main(void) {
 	// Variables
 	int exitoFuncion;
 	int opcionMenu;
-	int existeProximoLibre;
-	char salida;
 
 	// Declara array
 	Employee arrEmpleado[LARGO_ARR];
@@ -52,24 +50,7 @@ int main(void) {
 			switch(opcionMenu)
 			{
 				case 1:
-					do
-					{
-						exitoFuncion = eEmployee_Alta(arrEmpleado, LARGO_ARR, &existeProximoLibre);
-						if(existeProximoLibre != -1 && exitoFuncion == 0)
-						{
-							exitoFuncion = utn_getCharDosOpciones(&salida, "|¿Desea agregar otro empleado? (S / N): ",
-										                    "| -- Ingreso incorrecto --\n",
-															's', 'n', 3);
-							if(exitoFuncion != 0)
-							{
-								salida = 'n';
-							}
-						}
-						else
-						{
-							salida = 'n';
-						}
-					}while(salida != 'n');
+					eEmployee_Alta(arrEmpleado, LARGO_ARR);
 					break;
 				case 2:
 					editEmployee(arrEmpleado, LARGO_ARR);
