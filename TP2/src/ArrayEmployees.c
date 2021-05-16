@@ -322,7 +322,7 @@ int editEmployee(Employee* eArr, int size)
 
 			if(localSuccess == 0 && editOption != 0)
 			{
-				printEmployeesTable(eArr, size, 1);
+				printEmployeesTable(eArr, size);
 				localSuccess = getIdEmployee(&idEmployee,
 									       "\n| Ingrese el ID del empleado: ",
 						                   "| -- Error.",
@@ -419,7 +419,7 @@ int eEmployee_Baja(Employee* eArr, int size)
 		int existenEmpleados = checkEmployeeArr(eArr, size);
 		if(existenEmpleados == 0)
 		{
-			printEmployeesTable(eArr, size, 1);
+			printEmployeesTable(eArr, size);
 			printf("\n| BAJA DE EMPLEADO");
 			localSuccess = getIdEmployee(&auxId,
 								  "\n| Ingrese ID del Empleado: ",
@@ -549,25 +549,25 @@ void printEmployee(Employee employee)
 			w[0], employee.id, w[1], employee.name, w[2], employee.lastName, w[3], employee.salary, w[4], employee.sector);
 
 }
-int printEmployees(Employee* eArr, int largoArr, int orden)
+int printEmployees(Employee* eArr, int size, int order)
 {
-	int exitoFuncion = -1;
-	float salarios = 0;
-	float promedio = 0;
-	int cantEmpleadosMayor = 0;
+	int functionSuccess = -1;
+	float salary = 0;
+	float avarage = 0;
+	int contHigherSalaryEmployees = 0;
 
-	int existenEmpleados = checkEmployeeArr(eArr, largoArr);
-	if(existenEmpleados == 0)
+	int employeeExists = checkEmployeeArr(eArr, size);
+	if(employeeExists == 0)
 	{
-		obtenerTotalSalarios(eArr, largoArr, &salarios, &promedio);
-	    obtenerEmpleadosMayorSalario(eArr, largoArr, &cantEmpleadosMayor, promedio);
-	    sortEmployees(eArr, largoArr, orden);
+		obtenerTotalSalarios(eArr, size, &salary, &avarage);
+	    obtenerEmpleadosMayorSalario(eArr, size, &contHigherSalaryEmployees, avarage);
+	    sortEmployees(eArr, size, order);
 
 	    // int w[MAX_COL] = {15, 15, 15, 15, 15}; // Para imprimir columna se establece arriba
 	    printf("\n|TABLA EMPLEADOS");
 	    printf("\n|%-*s|%-*s|%-*s|%-*s|%-*s|\n", w[0],"ID", w[1],"NOMBRE", w[2],"APELLIDO", w[3],"SALARIO", w[4],"SECTOR");
 	    int i;
-	    for(i = 0; i < largoArr; i++)
+	    for(i = 0; i < size; i++)
 	    {
 	    	if(eArr[i].isEmpty == 0)
 	    	{
@@ -576,9 +576,9 @@ int printEmployees(Employee* eArr, int largoArr, int orden)
 	    }
 	    printf("\n\n|INFORMACION SOBRE SALARIOS");
 	    printf("\n|%-*s|%-*s|%-*s\n", w[0],"TOTAL SALARIOS", w[1],"PROM. SALARIOS", w[2],"CANT.EMPLEADOS QUE SUPERAN PROMEDIO");
-	    printf("|%-*.2f|%-*.2f|%-*d\n", w[0], salarios, w[1], promedio, w[2], cantEmpleadosMayor);
+	    printf("|%-*.2f|%-*.2f|%-*d\n", w[0], salary, w[1], avarage, w[2], contHigherSalaryEmployees);
 
-	    exitoFuncion = 0;
+	    functionSuccess = 0;
 	}
 	else
 	{
@@ -586,20 +586,19 @@ int printEmployees(Employee* eArr, int largoArr, int orden)
 	}
 
 
-	return exitoFuncion;
+	return functionSuccess;
 }
-int printEmployeesTable(Employee* eArr, int largoArr, int orden)
+int printEmployeesTable(Employee* eArr, int size)
 {
-	int exitoFuncion = -1;
+	int functionSuccess = -1;
 
-	int existenEmpleados = checkEmployeeArr(eArr, largoArr);
-	if(existenEmpleados == 0)
+	int employeeExists = checkEmployeeArr(eArr, size);
+	if(employeeExists == 0)
 	{
-		// int w[MAX_COL] = {15, 15, 15, 15, 15}; // Para imprimir columna se establece arriba
 		printf("\n|TABLA EMPLEADOS");
 		printf("\n|%-*s|%-*s|%-*s|%-*s|%-*s|\n", w[0],"ID", w[1],"NOMBRE", w[2],"APELLIDO", w[3],"SALARIO", w[4],"SECTOR");
 		int i;
-		for(i = 0; i < largoArr; i++)
+		for(i = 0; i < size; i++)
 		{
 			if(eArr[i].isEmpty == 0)
 			{
@@ -613,7 +612,7 @@ int printEmployeesTable(Employee* eArr, int largoArr, int orden)
 	}
 
 
-	return exitoFuncion;
+	return functionSuccess;
 }
 
 

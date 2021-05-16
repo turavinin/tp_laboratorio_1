@@ -213,11 +213,28 @@ int obtenerTotalSalarios(Employee* eArr, int size, float* totalSalary, float* av
  **/
 int obtenerEmpleadosMayorSalario(Employee* eArr, int size, int* contEmployeeHiger, float avarageSalary);
 
-
-
+/**
+ * \brief Prints one employee
+ * \param (eArr) array employees*.
+ **/
 void printEmployee(Employee employee);
-int printEmployees(Employee* eArr, int largoArr, int orden);
-int printEmployeesTable(Employee* eArr, int largoArr, int orden);
+
+/**
+ * \brief General function that prints to all employees and in the desired order.
+ * \param (eArr) array employees*.
+ * \param (size) int
+ * \param (order) int
+ * \return 0 (= true) and -1 (=false)
+ **/
+int printEmployees(Employee* eArr, int size, int order);
+
+/**
+ * \brief Print only the employee table
+ * \param (eArr) array employees*.
+ * \param (size) int
+ * \return 0 (= true) and -1 (=false)
+ **/
+int printEmployeesTable(Employee* eArr, int size);
 
 
 
