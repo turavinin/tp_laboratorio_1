@@ -75,7 +75,7 @@ int addEmployees(Employee* eArr, int size, int id, char* name, char* lastName, f
 
 	return functionSuccess;
 }
-int eEmployee_Alta(Employee* eArr, int size)
+int eEmployee_Create(Employee* eArr, int size)
 {
 	int functionSuccess = -1;
 	int localSuccess = -1;
@@ -408,7 +408,7 @@ int removeEmployee(Employee* eArr, int size, int idEmployee)
 	}
 	return functionSuccess;
 }
-int eEmployee_Baja(Employee* eArr, int size)
+int eEmployee_Delete(Employee* eArr, int size)
 {
 	int functionSuccess = -1;
 	int localSuccess;

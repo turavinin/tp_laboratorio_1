@@ -69,7 +69,7 @@ int addEmployees(Employee* eArr, int size, int id, char name[], char lastName[],
  * \param (size) int
  * \return 0 (= true) and -1 (=false)
  **/
-int eEmployee_Alta(Employee* eArr, int size);
+int eEmployee_Create(Employee* eArr, int size);
 /**
  * \brief Finds employee by id
  * \param (eArr) array employees*.
@@ -174,7 +174,7 @@ int removeEmployee(Employee* eArr, int size, int idEmployee);
  * \param (size) int
  * \return 0 (= true) and -1 (=false)
  **/
-int eEmployee_Baja(Employee* eArr, int size);
+int eEmployee_Delete(Employee* eArr, int size);
 
 /**
  * \brief Swaps two employees

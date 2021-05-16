@@ -41,13 +41,13 @@ int main(void) {
 			switch(opcionMenu)
 			{
 				case 1:
-					eEmployee_Alta(arrEmpleado, LARGO_ARR);
+					eEmployee_Create(arrEmpleado, LARGO_ARR);
 					break;
 				case 2:
 					editEmployee(arrEmpleado, LARGO_ARR);
 					break;
 				case 3:
-					eEmployee_Baja(arrEmpleado, LARGO_ARR);
+					eEmployee_Delete(arrEmpleado, LARGO_ARR);
 					break;
 				case 4:
 					printEmployees(arrEmpleado, LARGO_ARR, 1);
