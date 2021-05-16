@@ -219,8 +219,6 @@ void printEmployee(Employee employee);
 int printEmployees(Employee* eArr, int largoArr, int orden);
 int printEmployeesTable(Employee* eArr, int largoArr, int orden);
 
-int obtenerTotalSalarios(Employee* eArr, int largoArr, float* totalSalarios, float* promedioSalarios);
-int obtenerEmpleadosMayorSalario(Employee* eArr, int largoArr, int* contEmpleadosMayorSalario, int promedioSalarios);
 
 
 #endif /* ARRAYEMPLOYEES_H_ */
