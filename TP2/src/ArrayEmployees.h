@@ -8,13 +8,13 @@
 #define ARRAYEMPLOYEES_H_
 
 
-// DEFINE
+// DEFINES
 #define MAX_CHAR_CADENAS 51
 #define MAX_ERRORES 3
 #define MAX_COL 5
 
 
-// ESTRUCTURA
+// STRUCT
 typedef struct
 {
 	int id;
@@ -25,27 +25,196 @@ typedef struct
 	int isEmpty;
 } Employee;
 
-// FUNCIONES PRINCIPALES
-// Set id
+// MAIN FUNCTIONS
+
+/**
+ * \brief Set id automatically and incrementally.
+ * \param (id) int*
+ **/
 void eEmployee_SetId(int* id);
-// Init struct
-int initEmployees(Employee* eArr, int largoArr);
-// Search empty
-int eEmployee_SearchEmpty(Employee* eArr, int largoArr, int* posLibre);
-// Alta employee
-int addEmployees(Employee* eArr, int largoArr, int id, char name[], char lastName[], float salary, int sector, int posLibre);
-int eEmployee_Alta(Employee* eArr, int largoArr);
-// Buscar employee
-int findEmployeeById(Employee* eArr, int largoArr, int idEmployee, int* pPosicionEmployee);
-int getIdEmployee(int* idEmployee, char* mensaje, char* mensajeError, char* mensajeNoEncontrado, Employee* eArr, int largoArr, int maxErrores);
-int checkEmployeeArr(Employee* eArr, int largoArr);
-// Eliminar employee
-int removeEmployee(Employee* eArr, int largoArr, int idEmployee);
-int eEmployee_Baja(Employee* eArr, int largoArr);
-// Sort
-void swapEmployees(Employee* eArr, int primeraPos, int segundaPos);
-int sortEmployees(Employee* eArr, int largoArr, int order);
-// PRINT
+
+/**
+ * \brief Populate the array of employees with structures and set its "isEmpty" property to 1.
+ * \param (eArr) array employees*.
+ * \param (size) int
+ * \return 0 (= true) and -1 (=false)
+ **/
+int initEmployees(Employee* eArr, int size);
+
+/**
+ * \brief Perform a search in the array of a free spot.
+ * \param (eArr) array employees*.
+ * \param (size) int
+ * \param (freeSpot) int*
+ * \return 0 (= true) and -1 (=false)
+ **/
+int eEmployee_SearchEmpty(Employee* eArr, int size, int* freeSpot);
+
+/**
+ * \brief Add an employee to free spot in the array of employees
+ * \param (eArr) array employees*.
+ * \param (size) int
+ * \param (id) int
+ * \param (name[]) char
+ * \param (lastName[]) char
+ * \param (salary) float
+ * \param (sector) int
+ * \param (freeSpot) int
+ * \return 0 (= true) and -1 (=false)
+ **/
+int addEmployees(Employee* eArr, int size, int id, char name[], char lastName[], float salary, int sector, int freeSpot);
+/**
+ * \brief General function of creating a new employee
+ * \param (eArr) array employees*.
+ * \param (size) int
+ * \return 0 (= true) and -1 (=false)
+ **/
+int eEmployee_Alta(Employee* eArr, int size);
+/**
+ * \brief Finds employee by id
+ * \param (eArr) array employees*.
+ * \param (size) int
+ * \param (idEmployee) int
+ * \param (employeePosition) int*
+ * \return 0 (= true) and -1 (=false)
+ **/
+int findEmployeeById(Employee* eArr, int size, int idEmployee, int* employeePosition);
+
+/**
+ * \brief Ask through the console the employee's id
+ * \param (idEmployee) int*.
+ * \param (message) char*
+ * \param (errorMessage) char*
+ * \param (messageNotFound) char*
+ * \param (eArr) array employees*.
+ * \param (size) int
+ * \param (maxErrors) int
+ * \return 0 (= true) and -1 (=false)
+ **/
+int getIdEmployee(int* idEmployee, char* message, char* errorMessage, char* messageNotFound, Employee* eArr, int size, int maxErrors);
+
+/**
+ * \brief Checks if there is an employee on the list
+ * \param (eArr) array employees*.
+ * \param (size) int
+ * \return 0 (= true) and -1 (=false)
+ **/
+int checkEmployeeArr(Employee* eArr, int size);
+
+
+/**
+ * \brief Edit the employee's name
+ * \param (eArr) array employees*.
+ * \param (message) char*
+ * \param (errorMessage) char*
+ * \param (finalErrorMessage) char*
+ * \param (maxChar) int
+ * \param (maxErrors) int
+ * \param (position) int
+ * \return 0 (= true) and -1 (=false)
+ **/
+int editNameEmployee(Employee* employee, char* message, char* errorMessage, char* finalErrorMessage, int maxChar, int maxErrors, int position);
+
+/**
+ * \brief Edit the employee's last name
+ * \param (eArr) array employees*.
+ * \param (message) char*
+ * \param (errorMessage) char*
+ * \param (finalErrorMessage) char*
+ * \param (maxChar) int
+ * \param (maxErrors) int
+ * \param (position) int
+ * \return 0 (= true) and -1 (=false)
+ **/
+int editLastNameEmployee(Employee* employee, char* message, char* errorMessage, char* finalErrorMessage, int maxChar, int maxErrors, int position);
+
+/**
+ * \brief Edit the employee's salary
+ * \param (eArr) array employees*.
+ * \param (message) char*
+ * \param (errorMessage) char*
+ * \param (finalErrorMessage) char*
+ * \param (maxErrors) int
+ * \param (position) int
+ * \return 0 (= true) and -1 (=false)
+ **/
+int editSalaryEmployee(Employee* employee, char* message, char* errorMessage, char* finalErrorMessage, int maxErrors, int posicion);
+
+/**
+ * \brief Edit the employee's sector
+ * \param (eArr) array employees*.
+ * \param (message) char*
+ * \param (errorMessage) char*
+ * \param (finalErrorMessage) char*
+ * \param (maxErrors) int
+ * \param (position) int
+ * \return 0 (= true) and -1 (=false)
+ **/
+int editSectorEmployee(Employee* employee, char* message, char* errorMessage, char* finalErrorMessage, int maxErrors, int posicion);
+
+/**
+ * \brief General function of editing employee information
+ * \param (eArr) array employees*.
+ * \param (size) int
+ * \return 0 (= true) and -1 (=false)
+ **/
+int editEmployee(Employee* eArr, int size);
+
+/**
+ * \brief Removes employee
+ * \param (eArr) array employees*.
+ * \param (size) int
+ * \param (idEmployee) int
+ * \return 0 (= true) and -1 (=false)
+ **/
+int removeEmployee(Employee* eArr, int size, int idEmployee);
+/**
+ * \brief General function of employee removal
+ * \param (eArr) array employees*.
+ * \param (size) int
+ * \return 0 (= true) and -1 (=false)
+ **/
+int eEmployee_Baja(Employee* eArr, int size);
+
+/**
+ * \brief Swaps two employees
+ * \param (eArr) array employees*.
+ * \param (firstPosition) int
+ * \param (secondPosition) int
+ * \return 0 (= true) and -1 (=false)
+ **/
+void swapEmployees(Employee* eArr, int firstPosition, int secondPosition);
+/**
+ * \brief Sort the elements in the array of employees, the argument order indicate UP or DOWN order
+ * \param (eArr) array employees*.
+ * \param (size) int
+ * \param (order) int [1] indicate UP - [2] indicate DOWN
+ * \return 0 (= true) and -1 (=false)
+ **/
+int sortEmployees(Employee* eArr, int size, int order);
+
+/**
+ * \brief Gets the total salary of employees and the average salary
+ * \param (eArr) array employees*.
+ * \param (size) int
+ * \param (totalSalary) float*
+ * \param (promedioSalarios) float*
+ * \return 0 (= true) and -1 (=false)
+ **/
+int obtenerTotalSalarios(Employee* eArr, int size, float* totalSalary, float* averageSalary);
+
+/**
+ * \brief Gets employees who have higher than average salary
+ * \param (eArr) array employees*.
+ * \param (size) int
+ * \param (contEmployeeHiger) int*
+ * \param (avarageSalary) float
+ * \return 0 (= true) and -1 (=false)
+ **/
+int obtenerEmpleadosMayorSalario(Employee* eArr, int size, int* contEmployeeHiger, float avarageSalary);
+
+
+
 void printEmployee(Employee employee);
 int printEmployees(Employee* eArr, int largoArr, int orden);
 int printEmployeesTable(Employee* eArr, int largoArr, int orden);
@@ -53,10 +222,5 @@ int printEmployeesTable(Employee* eArr, int largoArr, int orden);
 int obtenerTotalSalarios(Employee* eArr, int largoArr, float* totalSalarios, float* promedioSalarios);
 int obtenerEmpleadosMayorSalario(Employee* eArr, int largoArr, int* contEmpleadosMayorSalario, int promedioSalarios);
 
-// EDITAR
-int editNameEmployee(Employee* employee, char* mensajePrimero, char* error, char* errorFinal, int maxChar, int erroresMaximos, int posicion);
-int editLastNameEmployee(Employee* employee, char* mensajePrimero, char* error, char* errorFinal, int maxChar, int erroresMaximos, int posicion);
-int editSalaryEmployee(Employee* employee, char* mensajePrimero, char* error, char* errorFinal, int erroresMaximos, int posicion);
-int editSectorEmployee(Employee* employee, char* mensajePrimero, char* error, char* errorFinal, int erroresMaximos, int posicion);
-int editEmployee(Employee* eArr, int largoArr);
+
 #endif /* ARRAYEMPLOYEES_H_ */

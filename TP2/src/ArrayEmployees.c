@@ -9,159 +9,102 @@ int contEmpleadosMayorSalario = 0;
 // PRINTF ARRAY SPACE
 int w[MAX_COL] = {15, 15, 15, 15, 15};
 
-// ID AUTOINCREMENTAL
+// SET ID
 int idEmployee = 0;
 void eEmployee_SetId(int* id)
 {
 	*id = idEmployee++;
 }
 
-// INIT ESTRUCTURA
-int initEmployees(Employee* eArr, int largoArr)
+// INIT
+int initEmployees(Employee* eArr, int size)
 {
-	int exitoFuncion = -1;
-	Employee employeeLibre;
-	if(eArr != NULL && largoArr > 0)
+	int functionSuccess = -1;
+	Employee freeEmployee;
+	if(eArr != NULL && size > 0)
 	{
 		int i;
-		for(i = 0; i < largoArr; i++)
+		for(i = 0; i < size; i++)
 		{
-			eArr[i] = employeeLibre;
+			eArr[i] = freeEmployee;
 			eArr[i].isEmpty = 1;
 		}
-		exitoFuncion = 0;
+		functionSuccess = 0;
 	}
-	return exitoFuncion;
+	return functionSuccess;
 }
 
-// ADD EMPLEADO
-int eEmployee_SearchEmpty(Employee* eArr, int largoArr, int* posLibre)
+// ADD
+int eEmployee_SearchEmpty(Employee* eArr, int size, int* freeSpot)
 {
-	int exitoFuncion = -1;
+	int functionSuccess = -1;
 
-	if(eArr != NULL && largoArr > 0)
+	if(eArr != NULL && size > 0)
 	{
 		int i;
-		for(i = 0; i < largoArr; i++)
+		for(i = 0; i < size; i++)
 		{
 			if(eArr[i].isEmpty == 1)
 			{
-				*posLibre = i;
-				exitoFuncion = 0;
+				*freeSpot = i;
+				functionSuccess = 0;
 				break;
 			}
 		}
 
-		if(exitoFuncion == -1)
+		if(functionSuccess == -1)
 		{
-			*posLibre = -1;
+			*freeSpot = -1;
 		}
 	}
-	return exitoFuncion;
+	return functionSuccess;
 }
-int addEmployees(Employee* eArr, int largoArr, int id, char* name, char* lastName, float salary, int sector, int posLibre)
+int addEmployees(Employee* eArr, int size, int id, char* name, char* lastName, float salary, int sector, int freeSpot)
 {
-	int exitoFuncion = -1;
-	if(eArr != NULL && largoArr > 0)
+	int functionSuccess = -1;
+	if(eArr != NULL && size > 0)
 	{
-		eArr[posLibre].id = id;
-		strcpy(eArr[posLibre].name, name);
-		strcpy(eArr[posLibre].lastName, lastName);
-		eArr[posLibre].salary = salary;
-		eArr[posLibre].sector = sector;
-		eArr[posLibre].isEmpty = 0;
-		exitoFuncion = 0;
+		eArr[freeSpot].id = id;
+		strcpy(eArr[freeSpot].name, name);
+		strcpy(eArr[freeSpot].lastName, lastName);
+		eArr[freeSpot].salary = salary;
+		eArr[freeSpot].sector = sector;
+		eArr[freeSpot].isEmpty = 0;
+		functionSuccess = 0;
 	}
 
-	return exitoFuncion;
+	return functionSuccess;
 }
-/*int eEmployee_AltaVIEJO(Employee* eArr, int largoArr, int* existenciaProxLibre)
+int eEmployee_Alta(Employee* eArr, int size)
 {
-	int exitoFuncion = -1;
-	int posLibre;
-	int auxProxLibre = *existenciaProxLibre;
-	int exito = eEmployee_SearchEmpty(eArr, largoArr, &posLibre);
-
-	if(exito == 0)
-	{
-		// Variable datos
-		char nombre[MAX_CHAR_CADENAS];
-		char apellido[MAX_CHAR_CADENAS];
-		float salario;
-		int sector;
-
-		printf("\n| AGREGAR EMPLEADO ------------------------|");
-		if(utn_getStringLimited(nombre,
-				               "\n| Ingrese el nombre: ",
-							   "| -- Ingreso incorrecto --\n",
-							   MAX_CHAR_CADENAS, MAX_ERRORES) == 0 &&
-		utn_getStringLimited(apellido,
-				            "| Ingrese el apellido: ",
-							"| -- Ingreso incorrecto --\n",
-							MAX_CHAR_CADENAS, MAX_ERRORES) == 0 &&
-		utn_getFloat(&salario,
-				     "| Ingrese el salario: ",
-					 "| -- Ingreso incorrecto --\n", MAX_ERRORES) == 0 &&
-		utn_getNumber(&sector,
-				      "| Ingrese el sector: ",
-					  "| -- Ingreso incorrecto --\n",
-					  MAX_ERRORES) == 0)
-		{
-			int id;
-			eEmployee_SetId(&id);
-			exito = addEmployees(eArr, largoArr, id, nombre, apellido, salario, sector, posLibre);
-			exitoFuncion = 0;
-		}
-		else
-		{
-			exito = -1;
-		}
-
-		eEmployee_SearchEmpty(eArr, largoArr, &auxProxLibre);
-		if(auxProxLibre == -1)
-		{
-			*existenciaProxLibre = auxProxLibre;
-		}
-	}
-
-	if(exito != 0)
-	{
-		printf("\n// ¡NO SE PUDO INGRESAR EMPLEADO!  //\n");
-	}
-
-	return exitoFuncion;
-}*/
-
-int eEmployee_Alta(Employee* eArr, int largoArr)
-{
-	int exitoFuncion = -1;
-	int exito = -1;
-	int posLibre = -1;
-	int proxLibre = -1;
-	char opcionSalida = 'n';
+	int functionSuccess = -1;
+	int localSuccess = -1;
+	int freeSpot = -1;
+	int nextFree = -1;
+	char quitOption = 'n';
 
 
 	do{
-		exito = eEmployee_SearchEmpty(eArr, largoArr, &posLibre);
-		if(exito == 0)
+		localSuccess = eEmployee_SearchEmpty(eArr, size, &freeSpot);
+		if(localSuccess == 0)
 		{
-			exito = -1;
-			// Variables auxiliares datos
-			char auxNombre[MAX_CHAR_CADENAS];
-			char auxApellido[MAX_CHAR_CADENAS];
-			float auxSalario;
+			localSuccess = -1;
+			// Aux variables
+			char auxName[MAX_CHAR_CADENAS];
+			char auxLastName[MAX_CHAR_CADENAS];
+			float auxSalary;
 			int auxSector;
 
 			printf("\n| AGREGAR EMPLEADO ------------------------|");
-			if(utn_getStringLimited(auxNombre,
+			if(utn_getStringLimited(auxName,
 					"\n| Ingrese el nombre: ",
 					"| -- Ingreso incorrecto --\n",
 					MAX_CHAR_CADENAS, MAX_ERRORES) == 0 &&
-					utn_getStringLimited(auxApellido,
+					utn_getStringLimited(auxLastName,
 							"| Ingrese el apellido: ",
 							"| -- Ingreso incorrecto --\n",
 							MAX_CHAR_CADENAS, MAX_ERRORES) == 0 &&
-							utn_getFloat(&auxSalario,
+							utn_getFloat(&auxSalary,
 									"| Ingrese el salario: ",
 									"| -- Ingreso incorrecto --\n", MAX_ERRORES) == 0 &&
 									utn_getNumber(&auxSector,
@@ -171,174 +114,201 @@ int eEmployee_Alta(Employee* eArr, int largoArr)
 			{
 				int id;
 				eEmployee_SetId(&id);
-				exito = addEmployees(eArr, largoArr, id, auxNombre, auxApellido, auxSalario, auxSector, posLibre);
-				exitoFuncion = 0;
+				localSuccess = addEmployees(eArr, size, id, auxName, auxLastName, auxSalary, auxSector, freeSpot);
+				functionSuccess = 0;
 			}
 
-			if(exito == 0)
+			if(localSuccess == 0)
 			{
-				exito = eEmployee_SearchEmpty(eArr, largoArr, &proxLibre);
-				if(exito == 0)
+				localSuccess = eEmployee_SearchEmpty(eArr, size, &nextFree);
+				if(localSuccess == 0)
 				{
-					exito = utn_getCharDosOpciones(&opcionSalida, "|¿Desea agregar otro empleado? (S / N): ",
+					localSuccess = utn_getCharDosOpciones(&quitOption, "|¿Desea agregar otro empleado? (S / N): ",
 							"| -- Ingreso incorrecto --\n",
 							's', 'n', 3);
-					if(exito != 0)
+					if(localSuccess != 0)
 					{
-						opcionSalida = 'n';
+						quitOption = 'n';
 					}
 
 				}
 			}
 			else
 			{
-				exitoFuncion = -1;
+				functionSuccess = -1;
 			}
 
 		}
 
-	} while(opcionSalida != 'n' && exito == 0);
+	} while(quitOption != 'n' && localSuccess == 0);
 
-	if(posLibre == -1)
+	if(freeSpot == -1)
 	{
-		printf("\n// ¡ESPACIO EN LA BASE INSUFICIENTE!  //");
+		printf("\n// ¡ESPACIO EN LA MEMORIA INSUFICIENTE!  //");
 	}
 
-	if(exitoFuncion != 0)
+	if(functionSuccess != 0)
 	{
 		printf("\n// ¡NO SE PUDO INGRESAR EMPLEADO!  //\n");
 	}
 
-	return exitoFuncion;
-
-
-/*
-
-
-
-
-		if(exito == 0)
-		{
-
-
-			if(exito == 0)
-			{
-				exito = eEmployee_SearchEmpty(eArr, largoArr, &auxProxLibre);
-				if(auxProxLibre != -1 && exito == 0)
-				{
-					exito = utn_getCharDosOpciones(&salida, "|¿Desea agregar otro empleado? (S / N): ",
-							"| -- Ingreso incorrecto --\n",
-							's', 'n', 3);
-					if(exito != 0)
-					{
-						salida = 'n';
-					}
-				}
-				else
-				{
-					salida = 'n';
-				}
-			}
-
-		}
-
-	} while (salida != 'n' && exito != -1);*/
-
-/*	if(exitoFuncion != 0)
-	{
-		printf("\n// ¡NO SE PUDO INGRESAR EMPLEADO!  //\n");
-	}*/
+	return functionSuccess;
 
 }
 
-
-
-// FIND EMPLEADO
-int findEmployeeById(Employee* eArr, int largoArr, int idEmployee, int* pPosicionEmployee)
+// FIND
+int findEmployeeById(Employee* eArr, int size, int idEmployee, int* employeePosition)
 {
-	int exitoFuncion = -1;
+	int functionSuccess = -1;
 
-	if(eArr != NULL && largoArr > 0)
+	if(eArr != NULL && size > 0)
 	{
 		int i;
-		for(i = 0; i < largoArr; i++)
+		for(i = 0; i < size; i++)
 		{
 			if(eArr[i].id == idEmployee)
 			{
-				*pPosicionEmployee = i;
-				exitoFuncion = 0;
+				*employeePosition = i;
+				functionSuccess = 0;
 			}
 		}
 	}
-	return exitoFuncion;
+	return functionSuccess;
 }
-int getIdEmployee(int* idEmployee, char* mensaje, char* mensajeError, char* mensajeNoEncontrado, Employee* eArr, int largoArr, int maxErrores)
+int getIdEmployee(int* idEmployee, char* message, char* errorMessage, char* messageNotFound, Employee* eArr, int size, int maxErrors)
 {
-	int exitoFuncion = -1;
+	int functionSuccess = -1;
 	int auxId = -1;
 
-	if(eArr != NULL && largoArr > 0)
+	if(eArr != NULL && size > 0)
 	{
-		int exito = utn_getNumber(&auxId, mensaje, mensajeError, maxErrores);
+		int localSuccess = utn_getNumber(&auxId, message, errorMessage, maxErrors);
 
-		if(exito == 0)
+		if(localSuccess == 0)
 		{
 			int i;
-			for(i = 0; i < largoArr; i++)
+			for(i = 0; i < size; i++)
 			{
 				if(eArr[i].id == auxId && eArr[i].isEmpty == 0)
 				{
 					*idEmployee = auxId;
-					exitoFuncion = 0;
-					exito = 0;
+					functionSuccess = 0;
+					localSuccess = 0;
 					break;
 				}
-				exito = -1;
+				localSuccess = -1;
 			}
 
-			if(exito == -1)
+			if(localSuccess == -1)
 			{
-				printf(mensajeNoEncontrado);
+				printf(messageNotFound);
 			}
 		}
 	}
 
-	return exitoFuncion;
+	return functionSuccess;
 }
-int checkEmployeeArr(Employee* eArr, int largoArr)
+int checkEmployeeArr(Employee* eArr, int size)
 {
-	int exitoFuncion;
-	if(eArr != NULL && largoArr > 0)
+	int functionSuccess;
+	if(eArr != NULL && size > 0)
 	{
 		int i;
-		for(i = 0; i < largoArr; i++)
+		for(i = 0; i < size; i++)
 		{
 			if(eArr[i].isEmpty == 0)
 			{
-				exitoFuncion = 0;
+				functionSuccess = 0;
 				break;
 			}
 		}
 	}
-	return exitoFuncion;
+	return functionSuccess;
 }
 
-
 // EDIT
-int editEmployee(Employee* eArr, int largoArr)
+int editNameEmployee(Employee* employee, char* message, char* errorMessage, char* finalErrorMessage, int maxChar, int maxErrors, int position)
 {
-	int exitoFuncion = -1;
-	int exito;
-	int opcionModificar;
-	int idEmployee;
-	int posicionEmployee;
+	int functionSuccess = -1;
+	char name[maxChar];
+	int localSuccess = utn_getStringLimited(name, message, errorMessage, maxChar, maxErrors);
 
-	int existenEmpleados = checkEmployeeArr(eArr, largoArr);
-	if(existenEmpleados == 0)
+	if(localSuccess == 0)
+	{
+		strcpy(employee[position].name, name);
+		functionSuccess = 0;
+	}
+	else{
+		printf(finalErrorMessage);
+	}
+
+	return functionSuccess;
+}
+int editLastNameEmployee(Employee* employee, char* message, char* errorMessage, char* finalErrorMessage, int maxChar, int maxErrors, int position)
+{
+	int functionSuccess = -1;
+	char lastName[maxChar];
+	int localSuccess = utn_getStringLimited(lastName, message, errorMessage, maxChar, maxErrors);
+
+	if(localSuccess == 0)
+	{
+		strcpy(employee[position].lastName, lastName);
+		functionSuccess = 0;
+	}
+	else{
+		printf(finalErrorMessage);
+	}
+
+	return functionSuccess;
+}
+int editSalaryEmployee(Employee* employee, char* message, char* errorMessage, char* finalErrorMessage, int maxErrors, int position)
+{
+	int functionSuccess = -1;
+	float newSalary;
+	int localSuccess = utn_getFloat(&newSalary, message, errorMessage, maxErrors);
+
+	if(localSuccess == 0)
+	{
+		employee[position].salary = newSalary;
+		functionSuccess = 0;
+	}
+	else{
+		printf(finalErrorMessage);
+	}
+
+	return functionSuccess;
+}
+int editSectorEmployee(Employee* employee, char* message, char* errorMessage, char* finalErrorMessage, int maxErrors, int position)
+{
+	int functionSuccess = -1;
+	int newSector;
+	int localSuccess = utn_getNumber(&newSector, message, errorMessage, maxErrors);
+
+	if(localSuccess == 0)
+	{
+		employee[position].sector = newSector;
+		functionSuccess = 0;
+	}
+	else{
+		printf(finalErrorMessage);
+	}
+
+	return functionSuccess;
+}
+int editEmployee(Employee* eArr, int size)
+{
+	int functionSuccess = -1;
+	int localSuccess;
+	int editOption;
+	int idEmployee;
+	int positionEmployee;
+
+	int employeeExists = checkEmployeeArr(eArr, size);
+	if(employeeExists == 0)
 	{
 		do
 		{
-			exito = utn_getNumberLimited(&opcionModificar,
+			localSuccess = utn_getNumberLimited(&editOption,
 										"\n| MODIFICAR EMPLEADO ------------------------|"
 										"\n| 1.Modificar nombre                         |"
 										"\n| 2.Modificar apellido                       |"
@@ -350,62 +320,63 @@ int editEmployee(Employee* eArr, int largoArr)
 										"\n|          // OPCION INCORRECTA //           |",
 										0, 4, MAX_ERRORES);
 
-			if(exito == 0 && opcionModificar != 0)
+			if(localSuccess == 0 && editOption != 0)
 			{
-				printEmployeesTable(eArr, largoArr, 1);
-				exito = getIdEmployee(&idEmployee,
+				printEmployeesTable(eArr, size, 1);
+				localSuccess = getIdEmployee(&idEmployee,
 									       "\n| Ingrese el ID del empleado: ",
 						                   "| -- Error.",
 										   "\n\n    // NO SE ENCONTRO AL EMPLEADO BUSCADO //\n\n",
-										   eArr, largoArr, MAX_ERRORES);
-				if(exito == 0)
+										   eArr, size, MAX_ERRORES);
+				if(localSuccess == 0)
 				{
-					findEmployeeById(eArr, largoArr, idEmployee, &posicionEmployee);
-					switch(opcionModificar)
+					findEmployeeById(eArr, size, idEmployee, &positionEmployee);
+					switch(editOption)
 					{
 						case 1:
 							editNameEmployee(eArr,
 											"\n| Ingrese el nuevo nombre del empleado: ",
 											"| -- Error.",
 											"\n\n    // NO FUE POSIBLE EDITAR EL NOMBRE. INTENE DE NUEVO. //\n\n",
-											MAX_CHAR_CADENAS, MAX_ERRORES, posicionEmployee);
-							opcionModificar = 0;
+											MAX_CHAR_CADENAS, MAX_ERRORES, positionEmployee);
+							editOption = 0;
 							break;
 						case 2:
 							editLastNameEmployee(eArr,
 											     "\n| Ingrese el nuevo apellido del empleado: ",
 												 "| -- Error.",
 												 "\n\n    // NO FUE POSIBLE EDITAR EL APELLIDO. INTENE DE NUEVO. //\n\n",
-												 MAX_CHAR_CADENAS, MAX_ERRORES, posicionEmployee);
-							opcionModificar = 0;
+												 MAX_CHAR_CADENAS, MAX_ERRORES, positionEmployee);
+							editOption = 0;
 							break;
 						case 3:
 							editSalaryEmployee(eArr,
 										      "\n| Ingrese el nuevo salario del empleado: ",
 											  "| -- Error.",
 											  "\n\n    // NO FUE POSIBLE EDITAR EL SALARIO. INTENE DE NUEVO. //\n\n",
-											  MAX_ERRORES, posicionEmployee);
-							opcionModificar = 0;
+											  MAX_ERRORES, positionEmployee);
+							editOption = 0;
 							break;
 						case 4:
 							editSectorEmployee(eArr,
 									          "\n| Ingrese el nuevo sector del empleado: ",
 											  "| -- Error.",
 											  "\n\n    // NO FUE POSIBLE EDITAR EL SECTOR. INTENE DE NUEVO. //\n\n",
-											  MAX_ERRORES, posicionEmployee);
-							opcionModificar = 0;
+											  MAX_ERRORES, positionEmployee);
+							editOption = 0;
 							break;
 					}
 				}
 			}
-		} while(opcionModificar != 0 || exito != 0);
+		} while(editOption != 0 || localSuccess != 0);
 
-		if(exito != 0)
+		if(localSuccess != 0)
 		{
 			printf("\n\n    // NO FUE POSIBLE MODIFICAR AL EMPLEADO //\n\n");
 		}
 		else
 		{
+			functionSuccess = 0;
 			printf("| EL EMPLEADO FUE EDITADO CORRECTAMENTE.\n\n");
 		}
 	}
@@ -416,119 +387,49 @@ int editEmployee(Employee* eArr, int largoArr)
 
 
 
-	return exitoFuncion;
+	return functionSuccess;
 }
 
-int editNameEmployee(Employee* employee, char* mensajePrimero, char* error, char* errorFinal, int maxChar, int erroresMaximos, int posicion)
+// REMOVE
+int removeEmployee(Employee* eArr, int size, int idEmployee)
 {
-	int exitoFuncion = -1;
-	char nombre[maxChar];
-	int exito = utn_getStringLimited(nombre, mensajePrimero, error, maxChar, erroresMaximos);
-
-	if(exito == 0)
-	{
-		strcpy(employee[posicion].name, nombre);
-		exitoFuncion = 0;
-	}
-	else{
-		printf(errorFinal);
-	}
-
-	return exitoFuncion;
-}
-int editLastNameEmployee(Employee* employee, char* mensajePrimero, char* error, char* errorFinal, int maxChar, int erroresMaximos, int posicion)
-{
-	int exitoFuncion = -1;
-	char apellido[maxChar];
-	int exito = utn_getStringLimited(apellido, mensajePrimero, error, maxChar, erroresMaximos);
-
-	if(exito == 0)
-	{
-		strcpy(employee[posicion].lastName, apellido);
-		exitoFuncion = 0;
-	}
-	else{
-		printf(errorFinal);
-	}
-
-	return exitoFuncion;
-}
-int editSalaryEmployee(Employee* employee, char* mensajePrimero, char* error, char* errorFinal, int erroresMaximos, int posicion)
-{
-	int exitoFuncion = -1;
-	float nuevoSalario;
-	int exito = utn_getFloat(&nuevoSalario, mensajePrimero, error, erroresMaximos);
-
-	if(exito == 0)
-	{
-		employee[posicion].salary = nuevoSalario;
-		exitoFuncion = 0;
-	}
-	else{
-		printf(errorFinal);
-	}
-
-	return exitoFuncion;
-}
-int editSectorEmployee(Employee* employee, char* mensajePrimero, char* error, char* errorFinal, int erroresMaximos, int posicion)
-{
-	int exitoFuncion = -1;
-	int nuevoSector;
-	int exito = utn_getNumber(&nuevoSector, mensajePrimero, error, erroresMaximos);
-
-	if(exito == 0)
-	{
-		employee[posicion].sector = nuevoSector;
-		exitoFuncion = 0;
-	}
-	else{
-		printf(errorFinal);
-	}
-
-	return exitoFuncion;
-}
-
-
-
-// REMOVE EMPLOYEE
-int removeEmployee(Employee* eArr, int largoArr, int idEmployee)
-{
-	int exitoFuncion = -1;
-	if(eArr != NULL && largoArr > 0)
+	int functionSuccess = -1;
+	if(eArr != NULL && size > 0)
 	{
 		int i;
-		for(i = 0; i < largoArr; i++)
+		for(i = 0; i < size; i++)
 		{
 			if(eArr[i].id == idEmployee && eArr[i].isEmpty == 0)
 			{
 				eArr[i].isEmpty = 1;
-				exitoFuncion = 0;
+				functionSuccess = 0;
 			}
 		}
 	}
-	return exitoFuncion;
+	return functionSuccess;
 }
-int eEmployee_Baja(Employee* eArr, int largoArr)
+int eEmployee_Baja(Employee* eArr, int size)
 {
-	int exitoFuncion = -1;
-	int exito;
+	int functionSuccess = -1;
+	int localSuccess;
 	int auxId;
 
-	if(eArr != NULL && largoArr > 0)
+	if(eArr != NULL && size > 0)
 	{
-		int existenEmpleados = checkEmployeeArr(eArr, largoArr);
+		int existenEmpleados = checkEmployeeArr(eArr, size);
 		if(existenEmpleados == 0)
 		{
-			printEmployeesTable(eArr, largoArr, 1);
+			printEmployeesTable(eArr, size, 1);
 			printf("\n| BAJA DE EMPLEADO");
-			exito = getIdEmployee(&auxId,
+			localSuccess = getIdEmployee(&auxId,
 								  "\n| Ingrese ID del Empleado: ",
 								  "\n| --Error.",
 								  "\n\n    // NO SE ENCONTRO AL EMPLEADO EN LA BASE //\n\n",
-								  eArr, largoArr, 3);
-			if(exito == 0)
+								  eArr, size, 3);
+			if(localSuccess == 0)
 			{
-				removeEmployee(eArr, largoArr, auxId);
+				removeEmployee(eArr, size, auxId);
+				functionSuccess = 0;
 				printf("| SE ELIMINO AL EMPLEADO CORRECTAMENTE //\n");
 			}
 		}
@@ -538,52 +439,51 @@ int eEmployee_Baja(Employee* eArr, int largoArr)
 		}
 	}
 
-	return exitoFuncion;
+	return functionSuccess;
 }
-
 
 // SORT
-void swapEmployees(Employee* eArr, int primeraPos, int segundaPos)
+void swapEmployees(Employee* eArr, int firstPosition, int secondPosition)
 {
 	Employee aux;
-	aux = eArr[primeraPos];
-	eArr[primeraPos] = eArr[segundaPos];
-	eArr[segundaPos] = aux;
+	aux = eArr[firstPosition];
+	eArr[firstPosition] = eArr[secondPosition];
+	eArr[secondPosition] = aux;
 }
-int sortEmployees(Employee* eArr, int largoArr, int order)
+int sortEmployees(Employee* eArr, int size, int order)
 {
-	int exitoFuncion = -1;
+	int functionSuccess = -1;
 
-	if(eArr != NULL && largoArr > 0)
+	if(eArr != NULL && size > 0)
 	{
 		switch(order)
 		{
 			int i;
 			int j;
 			case 1:
-				for(i = 0; i < largoArr -1; i++)
+				for(i = 0; i < size -1; i++)
 				{
-					for(j = 1; j < largoArr; j++)
+					for(j = 1; j < size; j++)
 					{
 						if(eArr[i].sector > eArr[j].sector ||
 						   (eArr[i].sector == eArr[j].sector && strcmp(eArr[i].lastName, eArr[j].lastName) > 0))
 						{
 							swapEmployees(eArr, i, j);
-							exitoFuncion = 0;
+							functionSuccess = 0;
 						}
 					}
 				}
 				break;
 			case 2:
-				for(i = 0; i < largoArr -1; i++)
+				for(i = 0; i < size -1; i++)
 				{
-					for(j = 1; j < largoArr; j++)
+					for(j = 1; j < size; j++)
 					{
 						if(eArr[i].sector < eArr[j].sector ||
 						  (eArr[i].sector == eArr[j].sector && strcmp(eArr[i].lastName, eArr[j].lastName) < 0))
 						{
 							swapEmployees(eArr, i, j);
-							exitoFuncion = 0;
+							functionSuccess = 0;
 						}
 					}
 				}
@@ -591,21 +491,20 @@ int sortEmployees(Employee* eArr, int largoArr, int order)
 		}
 	}
 
-	return exitoFuncion;
+	return functionSuccess;
 }
 
-
-// CALCULO SALARIOS
-int obtenerTotalSalarios(Employee* eArr, int largoArr, float* totalSalarios, float* promedioSalarios)
+// CALCULATE
+int obtenerTotalSalarios(Employee* eArr, int size, float* totalSalary, float* averageSalary)
 {
-	int exitoFuncion = -1;
+	int functionSuccess = -1;
 	int i;
 	float auxTotal = 0;
 	int auxCont = 0;
 
-	if(eArr != NULL && largoArr > 0)
+	if(eArr != NULL && size > 0)
 	{
-		for(i = 0; i < largoArr; i++)
+		for(i = 0; i < size; i++)
 		{
 			if(eArr[i].isEmpty == 0)
 			{
@@ -614,33 +513,33 @@ int obtenerTotalSalarios(Employee* eArr, int largoArr, float* totalSalarios, flo
 			}
 		}
 
-		*totalSalarios = auxTotal;
-		*promedioSalarios = auxTotal / auxCont;
-		exitoFuncion = 0;
+		*totalSalary = auxTotal;
+		*averageSalary = auxTotal / auxCont;
+		functionSuccess = 0;
 	}
 
-	return exitoFuncion;
+	return functionSuccess;
 }
-int obtenerEmpleadosMayorSalario(Employee* eArr, int largoArr, int* contEmpleadosMayorSalario, int promedioSalarios)
+int obtenerEmpleadosMayorSalario(Employee* eArr, int size, int* contEmployeeHiger, float avarageSalary)
 {
-	int exitoFuncion = -1;
-	int auxEmpleados = 0;
+	int functionSuccess = -1;
+	int auxEmployee = 0;
 	int i;
 
 	if(eArr != NULL && eArr > 0)
 	{
-		for(i = 0; i < largoArr; i++)
+		for(i = 0; i < size; i++)
 		{
-			if(eArr[i].isEmpty == 0 && eArr[i].salary > promedioSalarios)
+			if(eArr[i].isEmpty == 0 && eArr[i].salary > avarageSalary)
 			{
-				auxEmpleados++;
+				auxEmployee++;
 			}
 		}
 
-		*contEmpleadosMayorSalario = auxEmpleados;
-		exitoFuncion = 0;
+		*contEmployeeHiger = auxEmployee;
+		functionSuccess = 0;
 	}
-	return exitoFuncion;
+	return functionSuccess;
 }
 
 // PRINT

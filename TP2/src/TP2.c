@@ -1,13 +1,3 @@
-/*
- ============================================================================
- Name        : TP2.c
- Author      : Anton Turavinin
- Version     :
- Copyright   : Your copyright notice
- Description : Trabajo Practico N° 2
- ============================================================================
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,7 +6,7 @@
 #include "bibliotecaUTN-validaciones.h"
 #include "ArrayEmployees.h"
 
-#define LARGO_ARR 1
+#define LARGO_ARR 1000
 
 
 int main(void) {
@@ -36,14 +26,15 @@ int main(void) {
 	{
 		exitoFuncion = utn_getNumberLimited(&opcionMenu,
 				"\n|-----------------------MENU-------------------------|"
-				"\n| 1. ALTAS                                           |"
+				"\n| 1. ALTA                                            |"
 				"\n| 2. MODIFICAR                                       |"
 				"\n| 3. BAJA                                            |"
 				"\n| 4. INFORMAR                                        |"
+				"\n| 0. SALIR                                           |"
 				"\n|----------------------------------------------------|"
 				"\n| Seleccione una opción (Ingrese su número): ",
 				"\n|    --- ¡LA OPCION INGRESADA ES INCORRECTA! ---     |\n",
-				1, 4, 3);
+				0, 4, 3);
 
 		if(exitoFuncion == 0)
 		{
@@ -64,38 +55,9 @@ int main(void) {
 			}
 		}
 
-	}while(opcionMenu != 9);
+	}while(opcionMenu != 0);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*	int i;
-	for(i = 0; i < 2; i++)
-	{
-		eEmployee_Alta(arrEmpleado,
-					   LARGO_ARR,
-					   "\nIngrese su nombre: ",
-					   "Ingrese su apellido: ",
-					   "Ingrese su salario: ",
-					   "Ingrese su sector: ",
-					   "-- Error de carga. ",
-					   "---- ERROR AL INGRESAR EMPLEADO ----");
-	}
-
-	printEmployees(arrEmpleado, LARGO_ARR);*/
+	printf("\n|    --- ¡GRACIAS POR UTILIZAR EL PROGRAMA! ---     |\n");
 
 	return EXIT_SUCCESS;
 }
