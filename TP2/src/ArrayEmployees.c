@@ -1,5 +1,7 @@
 #include "ArrayEmployees.h"
 #include "bibliotecaUTN-validaciones.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 // TOTAL SALARIOS
 float totalSalarios = 0;
