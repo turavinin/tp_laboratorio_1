@@ -306,11 +306,6 @@ int controller_getPosByIdFromConsole(LinkedList* pArrayListEmployee, char* mensa
 	return exito;
 }
 
-
-
-
-
-
 /** \brief Modificar datos de empleado
  *
  * \param path char*
@@ -414,7 +409,38 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_removeEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+    int exito = -1;
+    int index;
+    char confirmacion = 'n';
+    Employee* auxEmployee;
+
+    if(pArrayListEmployee != NULL && ll_len(pArrayListEmployee) > 0)
+    {
+    	controller_ListEmployee(pArrayListEmployee);
+    	exito =  controller_getPosByIdFromConsole(pArrayListEmployee,
+    	    					"\n| Ingrese el ID del empleado a eliminar: ",
+    							"| -- Error.",
+    							"\n\n   ---- NO SE ENCONTRO AL EMPLEADO BUSCADO ----   \n\n", &index, MAX_ERRORES);
+
+    	if(exito == 0)
+    	{
+    		auxEmployee = ll_get(pArrayListEmployee, index);
+    		prints_Employee((*auxEmployee).id, (*auxEmployee).nombre, (*auxEmployee).horasTrabajadas, (*auxEmployee).sueldo, 1);
+    		exito = utn_getCharDosOpciones(&confirmacion,
+    				"|¿Confirma la eliminación del contribuyente? (S / N): ",
+					"| -- Ingreso incorrecto --\n",
+					's', 'n', MAX_ERRORES);
+
+    		if(confirmacion == 's')
+    		{
+    	    	ll_remove(pArrayListEmployee, index);
+    	    	printf("\n\n   ---- SE ELIMINO CORRECTAMENTE AL EMPELADO ----   \n\n");
+        		system("pause");
+
+    		}
+    	}
+    }
+    return exito;
 }
 
 /** \brief Ordenar empleados
@@ -426,7 +452,68 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_sortEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+    int exito = -1;
+    int opcionOrdenar;
+
+    if(pArrayListEmployee != NULL && ll_len(pArrayListEmployee) > 0)
+    {
+    	do
+    	{
+    		exito = utn_getNumberLimited(&opcionOrdenar,
+    				"\n| ORDENAR EMPLEADOS -------------------------|"
+    				"\n| 1.Ordenar por ID                           |"
+    				"\n| 2.Ordenar por NOMBRE                       |"
+    				"\n| 3.Ordenar por HS TRABAJADAS                |"
+    				"\n| 4.Ordenar por SUELDO                       |"
+    				"\n| 5.Salir                                    |"
+    				"\n|--------------------------------------------|"
+    				"\n| Selecciones una opcion: ",
+					"\n|          // OPCION INCORRECTA //           |",
+					1, 5, MAX_ERRORES);
+
+    		if(exito == 0 && opcionOrdenar != 5)
+    		{
+    			switch(opcionOrdenar)
+    			{
+    			case 1:
+    				ll_sort(pArrayListEmployee, ordenaId, 1);
+    				opcionOrdenar = 5;
+    				break;
+    			case 2:
+    				ll_sort(pArrayListEmployee, ordenaNombre, 1);
+    				opcionOrdenar = 5;
+    				break;
+    			case 3:
+    				ll_sort(pArrayListEmployee, ordenaHoras, 1);
+    				opcionOrdenar = 5;
+    				break;
+    			case 4:
+    				ll_sort(pArrayListEmployee, ordenaSueldo, 1);
+    				opcionOrdenar = 5;
+    				break;
+    			}
+
+
+    		}
+    	} while(exito != 0 || opcionOrdenar != 5);
+
+
+    	if(exito == 0)
+    	{
+    		system("pause");
+			printf("\n");
+			printf("\n| NUEVO ORDEN DE EMPLEADOS -------------------------|");
+			controller_ListEmployee(pArrayListEmployee);
+    	}
+    }
+
+    if(exito != 0)
+    {
+		printf("\n    ---- NO FUE POSIBLE ORDENAR A LOS EMPLEADOS ----\n\n");
+		system("pause");
+    }
+
+    return exito = 0;
 }
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).
@@ -479,3 +566,6 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
     return exito;
 }
 
+//ll_sort(pArrayListEmployee, ordenaSueldo, 1);
+//ll_sort(pArrayListEmployee, ordenaId, 1);
+//ordenaSueldo(Employee* empleadoUno, Employee* empleadoDos);

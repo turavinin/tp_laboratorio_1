@@ -265,5 +265,78 @@ int employee_editSueldo(Employee* this, char* mensaje, char* errorMensaje, char*
 	return exito;
 }
 
+int ordenaSueldo(void* empleadoUno, void* empleadoDos)
+{
+	int retorno;
 
+	if((*(Employee*)empleadoUno).sueldo > (*(Employee*)empleadoDos).sueldo)
+	{
+		retorno = 1;
+	}
+	else if((*(Employee*)empleadoUno).sueldo < (*(Employee*)empleadoDos).sueldo)
+	{
+		retorno = -1;
+	}
+	else
+	{
+		retorno = 0;
+	}
+	return retorno;
+}
 
+int ordenaId(void* empleadoUno, void* empleadoDos)
+{
+	int retorno;
+
+	if((*(Employee*)empleadoUno).id > (*(Employee*)empleadoDos).id)
+	{
+		retorno = 1;
+	}
+	else if((*(Employee*)empleadoUno).id < (*(Employee*)empleadoDos).id)
+	{
+		retorno = -1;
+	}
+	else
+	{
+		retorno = 0;
+	}
+	return retorno;
+}
+
+int ordenaHoras(void* empleadoUno, void* empleadoDos)
+{
+	int retorno;
+
+	if((*(Employee*)empleadoUno).horasTrabajadas > (*(Employee*)empleadoDos).horasTrabajadas)
+	{
+		retorno = 1;
+	}
+	else if((*(Employee*)empleadoUno).horasTrabajadas < (*(Employee*)empleadoDos).horasTrabajadas)
+	{
+		retorno = -1;
+	}
+	else
+	{
+		retorno = 0;
+	}
+	return retorno;
+}
+
+int ordenaNombre(void* empleadoUno, void* empleadoDos)
+{
+	int retorno;
+
+	if(strcmp((*(Employee*)empleadoUno).nombre, (*(Employee*)empleadoDos).nombre) > 0)
+	{
+		retorno = 1;
+	}
+	else if(strcmp((*(Employee*)empleadoDos).nombre, (*(Employee*)empleadoUno).nombre) > 0)
+	{
+		retorno = -1;
+	}
+	else
+	{
+		retorno = 0;
+	}
+	return retorno;
+}

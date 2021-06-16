@@ -35,9 +35,10 @@ int employee_editName(Employee* this, char* mensaje, char* errorMensaje, char* f
 int employee_editHsTrabajadas(Employee* this, char* mensaje, char* errorMensaje, char* finalErrorMensaje, int maxError);
 int employee_editSueldo(Employee* this, char* mensaje, char* errorMensaje, char* finalErrorMensaje, int maxError);
 
-
-
-
+int ordenaSueldo(void* empleadoUno, void* empleadoDos);
+int ordenaId(void* empleadoUno, void* empleadoDos);
+int ordenaHoras(void* empleadoUno, void* empleadoDos);
+int ordenaNombre(void* empleadoUno, void* empleadoDos);
 
 
 #endif // employee_H_INCLUDED
