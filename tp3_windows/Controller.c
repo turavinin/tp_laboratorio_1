@@ -269,6 +269,17 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
     return exito;
 }
 
+/** \brief Pide al usuario el ID del empleado por consola y devulve por parametro su INDEX.
+ *
+ * \param pArrayListEmployee LinkedList*
+ * \param mensaje char*
+ * \param mensajeError char*
+ * \param mensajeNoEncontrado char*
+ * \param index int*
+ * \param maxErrores int
+ * \return int (-1 => si hubo errores // 0 => si salió bien)
+ *
+ */
 int controller_getPosByIdFromConsole(LinkedList* pArrayListEmployee, char* mensaje, char* mensajeError, char* mensajeNoEncontrado, int* index, int maxErrores)
 {
 	int exito = -1;
@@ -566,6 +577,4 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
     return exito;
 }
 
-//ll_sort(pArrayListEmployee, ordenaSueldo, 1);
-//ll_sort(pArrayListEmployee, ordenaId, 1);
-//ordenaSueldo(Employee* empleadoUno, Employee* empleadoDos);
+

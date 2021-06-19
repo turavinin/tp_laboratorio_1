@@ -8,11 +8,13 @@
 #include "Employee.h"
 #include "bibliotecaUTN-validaciones.h"
 
-// DEFAULT ID
 int defaultId = 0;
 
-
-// NEW EMPLOYEE
+/** \brief Inicializa a la estructura employee.
+ *
+ * \return Employee*
+ *
+ */
 Employee* employee_new()
 {
 	Employee* newEmployee = NULL;
@@ -28,6 +30,15 @@ Employee* employee_new()
 
 	return newEmployee;
 }
+/** \brief Inicializa con parametros a la estructura employee.
+ *
+ * \param idStr char*
+ * \param nombreStr char*
+ * \param horasTrabajadasStr char*
+ * \param sueldoStr char*
+ * \return Employee*
+ *
+ */
 Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr, char* sueldoStr)
 {
 	Employee* newEmployee = employee_new();
@@ -43,7 +54,14 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajad
 	return newEmployee;
 }
 
-// GET-SET
+/** \brief Le asigna un id al empleado.
+ *
+ * \param this Employee*
+ * \param id int
+
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int employee_setId(Employee* this,int id)
 {
 	int exito = -1;
@@ -63,6 +81,15 @@ int employee_setId(Employee* this,int id)
 
 	return exito;
 }
+
+/** \brief Obtiene el ID del empleado.
+ *
+ * \param this Employee*
+ * \param id int*
+
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int employee_getId(Employee* this,int* id)
 {
 	int exito = -1;
@@ -75,6 +102,15 @@ int employee_getId(Employee* this,int* id)
 
 	return exito;
 }
+
+/** \brief Calcula el siguiente ID consecutivo a asignar segun la lista pasada.
+ *
+ * \param pArrayListEmployee LinkedList*
+ * \param id int*
+
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int employee_getNextIdFromList(LinkedList* pArrayListEmployee, int* id)
 {
 	int exito = -1;
@@ -91,6 +127,15 @@ int employee_getNextIdFromList(LinkedList* pArrayListEmployee, int* id)
 	}
 	return exito;
 }
+
+/** \brief Setea el siguiente ID consecutivo a asignar segun la lista pasada.
+ *
+ * \param pArrayListEmployee LinkedList*
+ * \param this Employee*
+
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int employee_setNextIdFromList(LinkedList* pArrayListEmployee, Employee* this)
 {
 	int exito = -1;
@@ -103,6 +148,15 @@ int employee_setNextIdFromList(LinkedList* pArrayListEmployee, Employee* this)
 	}
 	return exito;
 }
+
+/** \brief Pasa lo empleados de una lista a otra reasignando los ID.
+ *
+ * \param listFrom LinkedList*
+ * \param listTo LinkedList*
+
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int employee_addListAndSetId(LinkedList* listFrom, LinkedList* listTo)
 {
 	int exito = -1;
@@ -125,7 +179,14 @@ int employee_addListAndSetId(LinkedList* listFrom, LinkedList* listTo)
 	return exito;
 }
 
+/** \brief Le asigna un NOMBRE al empleado.
+ *
+ * \param this Employee*
+ * \param nombre char*
 
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int employee_setNombre(Employee* this,char* nombre)
 {
 	int exito = -1;
@@ -138,6 +199,15 @@ int employee_setNombre(Employee* this,char* nombre)
 
 	return exito;
 }
+
+/** \brief Obtiene el NOMBRE del empleado.
+ *
+ * \param this Employee*
+ * \param nombre char*
+
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int employee_getNombre(Employee* this,char* nombre)
 {
 	int exito = -1;
@@ -151,6 +221,14 @@ int employee_getNombre(Employee* this,char* nombre)
 	return exito;
 }
 
+/** \brief Le asigna las HORAS TRABAJADAS al empleado.
+ *
+ * \param this Employee*
+ * \param horasTrabajadas int
+
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int employee_setHorasTrabajadas(Employee* this,int horasTrabajadas)
 {
 	int exito = -1;
@@ -163,6 +241,15 @@ int employee_setHorasTrabajadas(Employee* this,int horasTrabajadas)
 
 	return exito;
 }
+
+/** \brief Obtiene las HORAS TRABAJADAS del empleado.
+ *
+ * \param this Employee*
+ * \param horasTrabajadas int*
+
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int employee_getHorasTrabajadas(Employee* this,int* horasTrabajadas)
 {
 	int exito = -1;
@@ -176,6 +263,14 @@ int employee_getHorasTrabajadas(Employee* this,int* horasTrabajadas)
 	return exito;
 }
 
+/** \brief Le asigna el SUELDO al empleado.
+ *
+ * \param this Employee*
+ * \param sueldo int
+
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int employee_setSueldo(Employee* this,int sueldo)
 {
 	int exito = -1;
@@ -188,6 +283,15 @@ int employee_setSueldo(Employee* this,int sueldo)
 
 	return exito;
 }
+
+/** \brief Obtiene el SUELDO del empleado.
+ *
+ * \param this Employee*
+ * \param sueldo int*
+
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int employee_getSueldo(Employee* this,int* sueldo)
 {
 	int exito = -1;
@@ -201,6 +305,18 @@ int employee_getSueldo(Employee* this,int* sueldo)
 	return exito;
 }
 
+/** \brief Pide el nombre por consola y se lo cambia al empleado
+ *
+ * \param this Employee*
+ * \param char char*
+ * \param errorMensaje char*
+ * \param finalErrorMensaje char*
+ * \param maxChar int
+ * \param maxError int
+
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int employee_editName(Employee* this, char* mensaje, char* errorMensaje, char* finalErrorMensaje, int maxChar, int maxError)
 {
 	int exito = -1;
@@ -222,6 +338,18 @@ int employee_editName(Employee* this, char* mensaje, char* errorMensaje, char* f
 
 	return exito;
 }
+
+/** \brief Pide las hs trabajadas por consola y se las cambia al empleado
+ *
+ * \param this Employee*
+ * \param char char*
+ * \param errorMensaje char*
+ * \param finalErrorMensaje char*
+ * \param maxError int
+
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int employee_editHsTrabajadas(Employee* this, char* mensaje, char* errorMensaje, char* finalErrorMensaje, int maxError)
 {
 	int exito = -1;
@@ -243,6 +371,18 @@ int employee_editHsTrabajadas(Employee* this, char* mensaje, char* errorMensaje,
 
 	return exito;
 }
+
+/** \brief Pide el sueldo por consola y se lo cambia al empleado
+ *
+ * \param this Employee*
+ * \param char char*
+ * \param errorMensaje char*
+ * \param finalErrorMensaje char*
+ * \param maxError int
+
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int employee_editSueldo(Employee* this, char* mensaje, char* errorMensaje, char* finalErrorMensaje, int maxError)
 {
 	int exito = -1;
@@ -265,6 +405,13 @@ int employee_editSueldo(Employee* this, char* mensaje, char* errorMensaje, char*
 	return exito;
 }
 
+/** \brief Funcion de ordenamiento por SUELDO
+ *
+ * \param empleadoUno void*
+ * \param empleadoDos void*
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int ordenaSueldo(void* empleadoUno, void* empleadoDos)
 {
 	int retorno;
@@ -284,6 +431,13 @@ int ordenaSueldo(void* empleadoUno, void* empleadoDos)
 	return retorno;
 }
 
+/** \brief Funcion de ordenamiento por ID
+ *
+ * \param empleadoUno void*
+ * \param empleadoDos void*
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int ordenaId(void* empleadoUno, void* empleadoDos)
 {
 	int retorno;
@@ -303,6 +457,13 @@ int ordenaId(void* empleadoUno, void* empleadoDos)
 	return retorno;
 }
 
+/** \brief Funcion de ordenamiento por HS TRABAJADAS
+ *
+ * \param empleadoUno void*
+ * \param empleadoDos void*
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int ordenaHoras(void* empleadoUno, void* empleadoDos)
 {
 	int retorno;
@@ -322,6 +483,13 @@ int ordenaHoras(void* empleadoUno, void* empleadoDos)
 	return retorno;
 }
 
+/** \brief Funcion de ordenamiento por NOMBRE
+ *
+ * \param empleadoUno void*
+ * \param empleadoDos void*
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int ordenaNombre(void* empleadoUno, void* empleadoDos)
 {
 	int retorno;

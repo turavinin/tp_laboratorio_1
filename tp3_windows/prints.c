@@ -6,11 +6,26 @@
 #include "prints.h"
 int w[7] = {15, 15, 15, 15, 15, 15, 15};
 
+/** \brief Imprime por consola el header de la tabla
+ *
+ * \return void
+ *
+ */
 void prints_Header()
 {
 	printf("\n|%-*s|%-*s|%-*s|%-*s|\n", w[0],"ID", w[1],"NOMBRE", w[2],"HS TRABAJADAS", w[3],"SUELDO");
 }
 
+/** \brief Imprime empleado con la opción de incluir header o no
+ *
+ * \param id int
+ * \param nombre char*
+ * \param horasTrabajadas int
+ * \param sueldo int
+ * \param opcionEncabezado int
+ * \return void
+ *
+ */
 void prints_Employee(int id, char* nombre, int horasTrabajadas, int sueldo, int opcionEncabezado)
 {
 	if(opcionEncabezado == 1)

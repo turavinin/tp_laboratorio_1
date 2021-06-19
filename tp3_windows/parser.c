@@ -91,6 +91,13 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 	return exito;
 }
 
+/** \brief Parsea los datos los datos de los empleados al archivo data.csv (modo texto).
+ *
+ * \param path char*
+ * \param pArrayListEmployee LinkedList*
+ * \return int
+ *
+ */
 int parser_EmployeeToText(FILE* pFile, LinkedList* pArrayListEmployee)
 {
 	int exito = -1;
@@ -121,6 +128,13 @@ int parser_EmployeeToText(FILE* pFile, LinkedList* pArrayListEmployee)
 	return exito;
 }
 
+/** \brief Parsea los datos los datos de los empleados al archivo data.bin (modo binario).
+ *
+ * \param path char*
+ * \param pArrayListEmployee LinkedList*
+ * \return int
+ *
+ */
 int parser_EmployeeToBin(FILE* pFile, LinkedList* pArrayListEmployee)
 {
 	int exito = -1;
@@ -150,73 +164,3 @@ int parser_EmployeeToBin(FILE* pFile, LinkedList* pArrayListEmployee)
 
 	return exito;
 }
-
-
-/*
-int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
-{
-	int exito = -1;
-	int camposStruct;
-	int opcionId;
-	LinkedList* auxList = ll_newLinkedList();
-	char buffer[CANT_STRUCT][LARGO_CHAR];
-
-	if(ll_len(pArrayListEmployee) > 0)
-	{
-		utn_getNumberLimited(&opcionId,
-				"\n| ---- ATENCION: YA EXISTEN DATOS DE EMPLEADOS EN EL SISTEMA ---- |"
-				"\n| ---- DESEA:                                                     |"
-				"\n| 1. Reasignar los ID de los empleados guardados en el archivo.   |"
-				"\n| 2. Resiganr los ID de los empleados cargados en el sistema.     |"
-				"\n| 3. Salir.                                                       |"
-				"\n| ----------------------------------------------------------------|"
-				"\n| Seleccione una opción (ingrese su número)                       |",
-				"\n|          ---- ¡LA OPCION INGRESADA ES INCORRECTA!----           |",
-				1, 3, 3);
-	}
-
-	if(opcionId != 3)
-	{
-		if(opcionId == 2)
-		{
-			auxList = ll_clone(pArrayListEmployee);
-		}
-
-
-		fscanf(pFile, "%[^,], %[^,], %[^,], %[^\n]\n", buffer[0], buffer[1], buffer[2], buffer[3]);
-		fflush(stdin);
-
-		while(!feof(pFile) && opcionId != 3)
-		{
-			camposStruct = fscanf(pFile, "%[^,], %[^,], %[^,], %[^\n]\n", buffer[0], buffer[1], buffer[2], buffer[3]);
-			if(camposStruct < CANT_STRUCT)
-			{
-				break;
-			}
-
-			Employee* nuevoEmpleado = employee_newParametros(buffer[0],buffer[1], buffer[2], buffer[3]);
-			if(nuevoEmpleado != NULL)
-			{
-				if(opcionId == 1)
-				{
-					employee_setNextIdFromList(pArrayListEmployee, nuevoEmpleado);
-					ll_add(pArrayListEmployee, nuevoEmpleado);
-				}
-				else if(opcionId == 2)
-				{
-
-				}
-
-			}
-			fflush(stdin);
-		}
-	}
-
-
-	if(ll_len(pArrayListEmployee) > 0)
-	{
-		exito = 0;
-	}
-
-	return exito;
-}*/
