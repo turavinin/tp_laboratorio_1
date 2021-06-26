@@ -28,6 +28,7 @@ Employee* employee_new()
 
 	return newEmployee;
 }
+
 /** \brief Inicializa con parametros a la estructura employee.
  *
  * \param idStr char*
@@ -52,6 +53,12 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajad
 	return newEmployee;
 }
 
+/** \brief Elimina el empleado
+ *
+ * \param this Employee*
+ * \return int (-1 => fallo // 0 => exito)
+ *
+ */
 int employee_delete(Employee* this)
 {
 	int exito = -1;
@@ -66,8 +73,7 @@ int employee_delete(Employee* this)
 /** \brief Le asigna un id al empleado.
  *
  * \param this Employee*
- * \param id int
-
+ * \param id intE
  * \return int (-1 => fallo // 0 => exito)
  *
  */
