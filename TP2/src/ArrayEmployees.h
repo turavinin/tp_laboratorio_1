@@ -11,6 +11,7 @@
 #define MAX_CHAR_CADENAS 51
 #define MAX_ERRORES 3
 #define MAX_COL 5
+#define MAX_ARR 1000
 
 // STRUCT
 typedef struct
@@ -203,7 +204,7 @@ int obtenerTotalSalarios(Employee* eArr, int size, float* totalSalary, float* av
  * \param (avarageSalary) float
  * \return 0 (= true) and -1 (=false)
  **/
-int obtenerEmpleadosMayorSalario(Employee* eArr, int size, int* contEmployeeHiger, float avarageSalary);
+int obtenerEmpleadosMayorSalario(Employee* eArr, int size, int* contEmployeeHiger, float avarageSalary, int* posArr);
 
 /**
  * \brief Prints one employee
@@ -228,6 +229,6 @@ int printEmployees(Employee* eArr, int size, int order);
  **/
 int printEmployeesTable(Employee* eArr, int size);
 
-void printInfoSalary(float salary, float avarage, int contHigherSalaryEmployees);
+void printInfoSalary(Employee* eArr, float salary, float avarage, int contHigherSalaryEmployees, int* posArr);
 
 #endif /* ARRAYEMPLOYEES_H_ */

@@ -7,7 +7,7 @@
 // INT
 int isNumerical(char* cadena)
 {
-	int exitoFuncion = 0;
+	int exitoFuncion = -1;
 
 	int i = 0;
 	if(cadena != NULL && strlen(cadena) > 0)
@@ -20,6 +20,7 @@ int isNumerical(char* cadena)
 				break;
 			}
 			i++;
+			exitoFuncion = 0;
 		}
 	}
 
@@ -29,7 +30,7 @@ int getInt(int* pResultado)
 {
 	int exitoFuncion = -1;
 	char buffer[64];
-	scanf("%s", buffer);
+	gets(buffer);
 	if(isNumerical(buffer) == 0)
 	{
 		*pResultado = atoi(buffer);
@@ -95,14 +96,14 @@ int utn_getNumber(int* pNumero, char* mensaje, char* mensajeError, int reintento
 // FLOAT
 int isFloating(char* cadena)
 {
-	int exitoFuncion = 0;
+	int exitoFuncion = -1;
 	int i = 0;
 	int banderaFloatPoint = 0;
 	if(cadena != NULL && strlen(cadena) > 0)
 	{
 		while(cadena[i] != '\0')
 		{
-			if((cadena[i] < '0' || cadena[i] > '9') && (cadena[i] != '.' || banderaFloatPoint == 1))
+			if(((cadena[i] < '0' || cadena[i] > '9') && (cadena[i] != '.' || banderaFloatPoint == 1)) || isspace(cadena[i]))
 			{
 				exitoFuncion = -1;
 				break;
@@ -114,6 +115,7 @@ int isFloating(char* cadena)
 			}
 
 			i++;
+			exitoFuncion = 0;
 		}
 	}
 	return exitoFuncion;
@@ -122,7 +124,7 @@ int getFloat(float* pResultado)
 {
 	int exitoFuncion = -1;
 	char buffer[64];
-	scanf("%s", buffer);
+	gets(buffer);
 	if(isFloating(buffer) == 0)
 	{
 		*pResultado = strtof(buffer, NULL);
@@ -476,7 +478,42 @@ int utn_getMailLimited(char* pString, char* mensaje, char* mensajeError, int max
 }
 
 
+// FORMATEADORES
+int utn_FormatoNombreCompleto(char* nombre, char* apellido, char* nombreCompleto)
+{
+	int exitoFuncion = -1;
+	int banderaExitos = 0;
 
+	if(strlen(nombre) > 0 && strlen(apellido) > 0)
+	{
+		strcpy(nombreCompleto, apellido);
+		strcat(nombreCompleto, ", ");
+		strcat(nombreCompleto, nombre);
+
+		strlwr(nombreCompleto);
+
+		for(int i = 0; i < strlen(nombreCompleto); i++)
+		{
+			if(i == 0 && isspace(nombreCompleto[i]) == 0)
+			{
+				nombreCompleto[0] = toupper(nombreCompleto[0]);
+				banderaExitos++;
+			}
+			else if(isspace(nombreCompleto[i]) && i < strlen(nombreCompleto) - 1)
+			{
+				nombreCompleto[i+1] = toupper(nombreCompleto[i+1]);
+				banderaExitos++;
+			}
+		}
+
+		if(banderaExitos == 2)
+		{
+			exitoFuncion = 0;
+		}
+	}
+
+	return exitoFuncion;
+}
 
 
 

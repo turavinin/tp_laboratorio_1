@@ -159,4 +159,13 @@ int isStringMail(char* cadena);
  * */
 int utn_getMailLimited(char* pString, char* mensaje, char* mensajeError, int maximosCaracteres, int reintentosMaximos);
 
+/**
+ * \brief Pasado un nombre y un apellido, une los dos en una variable y capitaliza la primera letra de cada uno.
+ * \param (nombre) char*.
+ * \param (apellido) char*.
+ * \param (nombreCompleto) char*.
+ * \return 0 (=true) si se obtuvo el numero, y -1 (=false) si no.
+ * */
+int utn_FormatoNombreCompleto(char* nombre, char* apellido, char* nombreCompleto);
+
 #endif /* BIBLIOTECAUTN_VALIDACIONES_H_ */

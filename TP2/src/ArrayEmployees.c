@@ -72,7 +72,6 @@ int eEmployee_Create(Employee* eArr, int size, int* defaultID)
 	char auxLastName[MAX_CHAR_CADENAS];
 	float auxSalary;
 	int auxSector;
-	int id;
 
 	localSuccess = eEmployee_SearchEmpty(eArr, size, &freeSpot);
 	if(localSuccess == 0 && freeSpot != -1)
@@ -192,7 +191,7 @@ int editNameEmployee(Employee* employee, char* message, char* errorMessage, char
 {
 	int functionSuccess = -1;
 	char name[maxChar];
-	int localSuccess = utn_getStringLimited(name, message, errorMessage, maxChar, maxErrors);
+	int localSuccess = utn_getStringCompuesto(name, message, errorMessage, maxChar, maxErrors);
 
 	if(localSuccess == 0)
 	{
@@ -209,7 +208,7 @@ int editLastNameEmployee(Employee* employee, char* message, char* errorMessage, 
 {
 	int functionSuccess = -1;
 	char lastName[maxChar];
-	int localSuccess = utn_getStringLimited(lastName, message, errorMessage, maxChar, maxErrors);
+	int localSuccess = utn_getStringCompuesto(lastName, message, errorMessage, maxChar, maxErrors);
 
 	if(localSuccess == 0)
 	{
@@ -483,11 +482,12 @@ int obtenerTotalSalarios(Employee* eArr, int size, float* totalSalary, float* av
 
 	return functionSuccess;
 }
-int obtenerEmpleadosMayorSalario(Employee* eArr, int size, int* contEmployeeHiger, float avarageSalary)
+int obtenerEmpleadosMayorSalario(Employee* eArr, int size, int* contEmployeeHiger, float avarageSalary, int* posArr)
 {
 	int functionSuccess = -1;
 	int auxEmployee = 0;
 	int i;
+	int j = 0;
 
 	if(eArr != NULL && eArr > 0)
 	{
@@ -495,7 +495,9 @@ int obtenerEmpleadosMayorSalario(Employee* eArr, int size, int* contEmployeeHige
 		{
 			if(eArr[i].isEmpty == 0 && eArr[i].salary > avarageSalary)
 			{
+				*(posArr + j) = i;
 				auxEmployee++;
+				j++;
 			}
 		}
 
@@ -520,6 +522,7 @@ int printEmployees(Employee* eArr, int size, int order)
 	float salary = 0;
 	float avarage = 0;
 	int contHigherSalaryEmployees = 0;
+	int* auxArr = (int*) malloc(sizeof(int) * MAX_ARR);
 
 	int employeeExists = checkEmployeeArr(eArr, size);
 	if(employeeExists == 0)
@@ -545,8 +548,8 @@ int printEmployees(Employee* eArr, int size, int order)
 				break;
 			case 2:
 				obtenerTotalSalarios(eArr, size, &salary, &avarage);
-				obtenerEmpleadosMayorSalario(eArr, size, &contHigherSalaryEmployees, avarage);
-				printInfoSalary(salary, avarage, contHigherSalaryEmployees);
+				obtenerEmpleadosMayorSalario(eArr, size, &contHigherSalaryEmployees, avarage, auxArr);
+				printInfoSalary(eArr, salary, avarage, contHigherSalaryEmployees, auxArr);
 				break;
 			}
 		}
@@ -585,12 +588,25 @@ int printEmployeesTable(Employee* eArr, int size)
 
 	return functionSuccess;
 }
-void printInfoSalary(float salary, float avarage, int contHigherSalaryEmployees)
+void printInfoSalary(Employee* eArr, float salary, float avarage, int contHigherSalaryEmployees, int* posArr)
 {
 	int w[MAX_COL] = {15, 15, 15, 15, 15};
+	char nombreCompleto[MAX_CHAR_CADENAS];
+	int j;
+
+
+
 	printf("\n\n|INFORMACION SOBRE SALARIOS");
 	printf("\n|%-*s|%-*s|%-*s\n", w[0],"TOTAL SALARIOS", w[1],"PROM. SALARIOS", w[2],"CANT.EMPLEADOS QUE SUPERAN PROMEDIO");
 	printf("|%-*.2f|%-*.2f|%-*d\n", w[0], salary, w[1], avarage, w[2], contHigherSalaryEmployees);
+
+	printf("|%-*s\n", w[0],"\n|EMPLEADOS QUE SUPERAN PROMEDIO:");
+	for(int i = 0; i < contHigherSalaryEmployees; i++)
+	{
+		j = posArr[i];
+		utn_FormatoNombreCompleto(eArr[j].name, eArr[j].lastName, nombreCompleto);
+		printf("|%-*s\n", w[0], nombreCompleto);
+	}
 }
 
 
