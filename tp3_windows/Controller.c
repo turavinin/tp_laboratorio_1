@@ -167,6 +167,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 
 	return exito;
 }
+
 /** \brief Listar empleados
  *
  * \param path char*
@@ -198,6 +199,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 
     return exito;
 }
+
 /** \brief Alta de empleados
  *
  * \param path char*
@@ -476,19 +478,19 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
     			switch(opcionOrdenar)
     			{
     			case 1:
-    				ll_sort(pArrayListEmployee, ordenaId, 1);
+    				ll_sort(pArrayListEmployee, employee_ordenaId, 1);
     				opcionOrdenar = 5;
     				break;
     			case 2:
-    				ll_sort(pArrayListEmployee, ordenaNombre, 1);
+    				ll_sort(pArrayListEmployee, employee_ordenaNombre, 1);
     				opcionOrdenar = 5;
     				break;
     			case 3:
-    				ll_sort(pArrayListEmployee, ordenaHoras, 1);
+    				ll_sort(pArrayListEmployee, employee_ordenaHoras, 1);
     				opcionOrdenar = 5;
     				break;
     			case 4:
-    				ll_sort(pArrayListEmployee, ordenaSueldo, 1);
+    				ll_sort(pArrayListEmployee, employee_ordenaSueldo, 1);
     				opcionOrdenar = 5;
     				break;
     			}
@@ -496,15 +498,6 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
 
     		}
     	} while(exito != 0 || opcionOrdenar != 5);
-
-
-    	if(exito == 0)
-    	{
-    		system("pause");
-			printf("\n");
-			printf("\n| NUEVO ORDEN DE EMPLEADOS -------------------------|");
-			controller_ListEmployee(pArrayListEmployee);
-    	}
     }
 
     if(exito != 0)

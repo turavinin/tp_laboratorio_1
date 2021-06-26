@@ -417,7 +417,7 @@ int employee_editSueldo(Employee* this, char* mensaje, char* errorMensaje, char*
  * \return int (-1 => fallo // 0 => exito)
  *
  */
-int ordenaSueldo(void* empleadoUno, void* empleadoDos)
+int employee_ordenaSueldo(void* empleadoUno, void* empleadoDos)
 {
 	int retorno;
 
@@ -443,7 +443,7 @@ int ordenaSueldo(void* empleadoUno, void* empleadoDos)
  * \return int (-1 => fallo // 0 => exito)
  *
  */
-int ordenaId(void* empleadoUno, void* empleadoDos)
+int employee_ordenaId(void* empleadoUno, void* empleadoDos)
 {
 	int retorno;
 
@@ -469,7 +469,7 @@ int ordenaId(void* empleadoUno, void* empleadoDos)
  * \return int (-1 => fallo // 0 => exito)
  *
  */
-int ordenaHoras(void* empleadoUno, void* empleadoDos)
+int employee_ordenaHoras(void* empleadoUno, void* empleadoDos)
 {
 	int retorno;
 
@@ -495,7 +495,7 @@ int ordenaHoras(void* empleadoUno, void* empleadoDos)
  * \return int (-1 => fallo // 0 => exito)
  *
  */
-int ordenaNombre(void* empleadoUno, void* empleadoDos)
+int employee_ordenaNombre(void* empleadoUno, void* empleadoDos)
 {
 	int retorno;
 
