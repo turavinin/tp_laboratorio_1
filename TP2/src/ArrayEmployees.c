@@ -594,8 +594,6 @@ void printInfoSalary(Employee* eArr, float salary, float avarage, int contHigher
 	char nombreCompleto[MAX_CHAR_CADENAS];
 	int j;
 
-
-
 	printf("\n\n|INFORMACION SOBRE SALARIOS");
 	printf("\n|%-*s|%-*s|%-*s\n", w[0],"TOTAL SALARIOS", w[1],"PROM. SALARIOS", w[2],"CANT.EMPLEADOS QUE SUPERAN PROMEDIO");
 	printf("|%-*.2f|%-*.2f|%-*d\n", w[0], salary, w[1], avarage, w[2], contHigherSalaryEmployees);

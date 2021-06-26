@@ -94,7 +94,6 @@ int getIdEmployee(int* idEmployee, char* message, char* errorMessage, char* mess
  **/
 int checkEmployeeArr(Employee* eArr, int size);
 
-
 /**
  * \brief Edit the employee's name
  * \param (eArr) array employees*.
