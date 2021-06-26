@@ -103,6 +103,8 @@ int utn_getCharDosOpciones(char* pChar, char* mensajeConOpciones, char* mensajeE
  * */
 int utn_getCharTresOpciones(char* pChar, char* mensajeConOpciones, char* mensajeError, char opcionUno, char opcionDos, char opcionTres, int reintentosMaximos);
 
+int esSpecialChar(char caracter);
+
 /**
  * \brief Verifica si la cadena ingresada es alfabetica
  * \param Cadena de caracteres a ser validada

@@ -5,7 +5,6 @@
 #include <conio.h>
 #include "bibliotecaUTN-validaciones.h"
 #include "ArrayEmployees.h"
-
 #define LARGO_ARR 1000
 
 
@@ -13,6 +12,7 @@ int main(void) {
 	setbuf(stdout, NULL);
 
 	// Variables
+	int startId = 1;
 	int exitoFuncion;
 	int opcionMenu;
 
@@ -41,7 +41,7 @@ int main(void) {
 			switch(opcionMenu)
 			{
 				case 1:
-					eEmployee_Create(arrEmpleado, LARGO_ARR);
+					eEmployee_Create(arrEmpleado, LARGO_ARR, &startId);
 					break;
 				case 2:
 					eEmployee_Edit(arrEmpleado, LARGO_ARR);

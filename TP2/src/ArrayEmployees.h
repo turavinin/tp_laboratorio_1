@@ -7,12 +7,10 @@
 #ifndef ARRAYEMPLOYEES_H_
 #define ARRAYEMPLOYEES_H_
 
-
 // DEFINES
 #define MAX_CHAR_CADENAS 51
 #define MAX_ERRORES 3
 #define MAX_COL 5
-
 
 // STRUCT
 typedef struct
@@ -26,12 +24,6 @@ typedef struct
 } Employee;
 
 // MAIN FUNCTIONS
-
-/**
- * \brief Set id automatically and incrementally.
- * \param (id) int*
- **/
-void eEmployee_SetId(int* id);
 
 /**
  * \brief Populate the array of employees with structures and set its "isEmpty" property to 1.
@@ -69,7 +61,7 @@ int addEmployees(Employee* eArr, int size, int id, char name[], char lastName[],
  * \param (size) int
  * \return 0 (= true) and -1 (=false)
  **/
-int eEmployee_Create(Employee* eArr, int size);
+int eEmployee_Create(Employee* eArr, int size, int* defaultID);
 /**
  * \brief Finds employee by id
  * \param (eArr) array employees*.
@@ -167,7 +159,7 @@ int eEmployee_Edit(Employee* eArr, int size);
  * \param (idEmployee) int
  * \return 0 (= true) and -1 (=false)
  **/
-int removeEmployee(Employee* eArr, int size, int idEmployee);
+int removeEmployee(Employee* eArr, int position);
 /**
  * \brief General function of employee removal
  * \param (eArr) array employees*.
@@ -236,6 +228,6 @@ int printEmployees(Employee* eArr, int size, int order);
  **/
 int printEmployeesTable(Employee* eArr, int size);
 
-
+void printInfoSalary(float salary, float avarage, int contHigherSalaryEmployees);
 
 #endif /* ARRAYEMPLOYEES_H_ */
