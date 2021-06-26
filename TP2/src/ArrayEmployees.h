@@ -228,6 +228,15 @@ int printEmployees(Employee* eArr, int size, int order);
  **/
 int printEmployeesTable(Employee* eArr, int size);
 
+/**
+ * \brief Prints the info of salaries
+ * \param (eArr) array employees*.
+ * \param (salary) float
+ * \param (avarage) float
+ * \param (contHigherSalaryEmployees) int
+ * \param (posArr) int*
+ * \return 0 (= true) and -1 (=false)
+ **/
 void printInfoSalary(Employee* eArr, float salary, float avarage, int contHigherSalaryEmployees, int* posArr);
 
 #endif /* ARRAYEMPLOYEES_H_ */

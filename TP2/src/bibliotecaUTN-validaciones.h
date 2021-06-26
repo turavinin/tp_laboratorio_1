@@ -103,6 +103,11 @@ int utn_getCharDosOpciones(char* pChar, char* mensajeConOpciones, char* mensajeE
  * */
 int utn_getCharTresOpciones(char* pChar, char* mensajeConOpciones, char* mensajeError, char opcionUno, char opcionDos, char opcionTres, int reintentosMaximos);
 
+/**
+ * \brief Verifica si el caracter es especial
+ * \param (caracter) char
+ * \return Retorna 0 (=true) si es especial, y -1 (=false) si no lo es.
+ * */
 int esSpecialChar(char caracter);
 
 /**
