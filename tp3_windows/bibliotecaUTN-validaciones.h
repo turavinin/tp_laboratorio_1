@@ -104,6 +104,13 @@ int utn_getCharDosOpciones(char* pChar, char* mensajeConOpciones, char* mensajeE
 int utn_getCharTresOpciones(char* pChar, char* mensajeConOpciones, char* mensajeError, char opcionUno, char opcionDos, char opcionTres, int reintentosMaximos);
 
 /**
+ * \brief Verifica si el caracter es especial
+ * \param (caracter) char
+ * \return Retorna 0 (=true) si es especial, y -1 (=false) si no lo es.
+ * */
+int esSpecialChar(char caracter);
+
+/**
  * \brief Verifica si la cadena ingresada es alfabetica
  * \param Cadena de caracteres a ser validada
  * \return Retorna 0 (=true) si la cadena es floating, y -1 (=false) si no lo es.
@@ -173,6 +180,7 @@ int isStringCuil(char* cadena);
  * \return 0 (=true) si se obtuvo el numero, y -1 (=false) si no.
  * */
 int utn_getCuil(char* pString, char* mensaje, char* mensajeError, int reintentosMaximos);
+
 /**
  * \brief Pasado un nombre y un apellido, une los dos en una variable y capitaliza la primera letra de cada uno.
  * \param (nombre) char*.

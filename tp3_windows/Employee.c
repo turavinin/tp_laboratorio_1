@@ -8,8 +8,6 @@
 #include "Employee.h"
 #include "bibliotecaUTN-validaciones.h"
 
-int defaultId = 0;
-
 /** \brief Inicializa a la estructura employee.
  *
  * \return Employee*
@@ -54,6 +52,17 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajad
 	return newEmployee;
 }
 
+int employee_delete(Employee* this)
+{
+	int exito = -1;
+	if(this != NULL)
+	{
+		free(this);
+		exito = 0;
+	}
+	return exito;
+}
+
 /** \brief Le asigna un id al empleado.
  *
  * \param this Employee*
@@ -71,12 +80,8 @@ int employee_setId(Employee* this,int id)
 		if(id > 0)
 		{
 			(*this).id = id;
+			exito = 0;
 		}
-		else if (id == 0)
-		{
-			(*this).id = defaultId++;
-		}
-		exito = 0;
 	}
 
 	return exito;
@@ -324,7 +329,7 @@ int employee_editName(Employee* this, char* mensaje, char* errorMensaje, char* f
 
 	if(this != NULL)
 	{
-		exito = utn_getStringLimited(auxNombre, mensaje, errorMensaje, maxChar, maxError);
+		exito = utn_getStringCompuesto(auxNombre, mensaje, errorMensaje, maxChar, maxError);
 		if(exito == 0)
 		{
 			employee_setNombre(this, auxNombre);

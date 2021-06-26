@@ -19,6 +19,7 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 	int exito = -1;
 	int camposStruct;
 	char buffer[CANT_STRUCT][LARGO_CHAR];
+	Employee* nuevoEmpleado = NULL;
 
 	if(ll_len(pArrayListEmployee) > 0)
 	{
@@ -36,7 +37,7 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 			break;
 		}
 
-		Employee* nuevoEmpleado = employee_newParametros(buffer[0],buffer[1], buffer[2], buffer[3]);
+		nuevoEmpleado = employee_newParametros(buffer[0],buffer[1], buffer[2], buffer[3]);
 		if(nuevoEmpleado != NULL)
 		{
 			ll_add(pArrayListEmployee, nuevoEmpleado);
@@ -64,6 +65,7 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 	int exito = -1;
 	int camposStruct;
 	char buffer[CANT_STRUCT][128];
+	Employee* nuevoEmpleado = NULL;
 
 	fscanf(pFile, "%[^,], %[^,], %[^,], %[^\n]\n", buffer[0], buffer[1], buffer[2], buffer[3]);
 
@@ -75,7 +77,7 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 			break;
 		}
 
-		Employee* nuevoEmpleado = employee_newParametros(buffer[0],buffer[1], buffer[2], buffer[3]);
+		nuevoEmpleado = employee_newParametros(buffer[0],buffer[1], buffer[2], buffer[3]);
 		if(nuevoEmpleado != NULL)
 		{
 			ll_add(pArrayListEmployee, nuevoEmpleado);
@@ -103,7 +105,7 @@ int parser_EmployeeToText(FILE* pFile, LinkedList* pArrayListEmployee)
 	int exito = -1;
 	int largoLL = ll_len(pArrayListEmployee);
 
-	Employee* auxEmployee;
+	Employee* auxEmployee = NULL;
 	int id;
 	char nombre[LARGO_CHAR];
 	int hsTrabajadas;
@@ -140,7 +142,7 @@ int parser_EmployeeToBin(FILE* pFile, LinkedList* pArrayListEmployee)
 	int exito = -1;
 	int largoLL = ll_len(pArrayListEmployee);
 
-	Employee* auxEmployee;
+	Employee* auxEmployee = NULL;
 	int id;
 	char nombre[LARGO_CHAR];
 	int hsTrabajadas;

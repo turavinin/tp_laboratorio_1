@@ -4,7 +4,6 @@
 #include <ctype.h>
 #include <conio.h>
 #include "prints.h"
-int w[7] = {15, 15, 15, 15, 15, 15, 15};
 
 /** \brief Imprime por consola el header de la tabla
  *
@@ -13,6 +12,8 @@ int w[7] = {15, 15, 15, 15, 15, 15, 15};
  */
 void prints_Header()
 {
+
+	int w[7] = {10, 20, 15, 15, 15, 15, 15};
 	printf("\n|%-*s|%-*s|%-*s|%-*s|\n", w[0],"ID", w[1],"NOMBRE", w[2],"HS TRABAJADAS", w[3],"SUELDO");
 }
 
@@ -28,6 +29,7 @@ void prints_Header()
  */
 void prints_Employee(int id, char* nombre, int horasTrabajadas, int sueldo, int opcionEncabezado)
 {
+	int w[7] = {10, 20, 15, 15, 15, 15, 15};
 	if(opcionEncabezado == 1)
 	{
 		printf("\n|%-*s|%-*s|%-*s|%-*s|\n", w[0],"ID", w[1],"NOMBRE", w[2],"HS TRABAJADAS", w[3],"SUELDO");

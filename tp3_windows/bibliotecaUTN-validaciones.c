@@ -7,7 +7,7 @@
 // INT
 int isNumerical(char* cadena)
 {
-	int exitoFuncion = 0;
+	int exitoFuncion = -1;
 
 	int i = 0;
 	if(cadena != NULL && strlen(cadena) > 0)
@@ -20,6 +20,7 @@ int isNumerical(char* cadena)
 				break;
 			}
 			i++;
+			exitoFuncion = 0;
 		}
 	}
 
@@ -29,7 +30,7 @@ int getInt(int* pResultado)
 {
 	int exitoFuncion = -1;
 	char buffer[64];
-	scanf("%s", buffer);
+	gets(buffer);
 	if(isNumerical(buffer) == 0)
 	{
 		*pResultado = atoi(buffer);
@@ -95,14 +96,14 @@ int utn_getNumber(int* pNumero, char* mensaje, char* mensajeError, int reintento
 // FLOAT
 int isFloating(char* cadena)
 {
-	int exitoFuncion = 0;
+	int exitoFuncion = -1;
 	int i = 0;
 	int banderaFloatPoint = 0;
 	if(cadena != NULL && strlen(cadena) > 0)
 	{
 		while(cadena[i] != '\0')
 		{
-			if((cadena[i] < '0' || cadena[i] > '9') && (cadena[i] != '.' || banderaFloatPoint == 1))
+			if(((cadena[i] < '0' || cadena[i] > '9') && (cadena[i] != '.' || banderaFloatPoint == 1)) || isspace(cadena[i]))
 			{
 				exitoFuncion = -1;
 				break;
@@ -114,6 +115,7 @@ int isFloating(char* cadena)
 			}
 
 			i++;
+			exitoFuncion = 0;
 		}
 	}
 	return exitoFuncion;
@@ -122,7 +124,7 @@ int getFloat(float* pResultado)
 {
 	int exitoFuncion = -1;
 	char buffer[64];
-	scanf("%s", buffer);
+	gets(buffer);
 	if(isFloating(buffer) == 0)
 	{
 		*pResultado = strtof(buffer, NULL);
@@ -159,30 +161,28 @@ int utn_getFloat(float* pNumero, char* mensaje, char* mensajeError, int reintent
 int utn_getFloatLimited(float* pNumero, char* mensaje, char* mensajeError, float numeroMin, float numeroMax, int reintentosMax)
 {
 	int exitoFuncion = -1;
-		float numero;
+	float numero;
 
-		while(reintentosMax > 0)
+	while(reintentosMax > 0)
+	{
+		printf(mensaje);
+		if(getFloat(&numero) == 0)
 		{
-			printf(mensaje);
-			if(getFloat(&numero) == 0)
+			if(numero <= numeroMax && numero >= numeroMin)
 			{
-				if(numero <= numeroMax && numero >= numeroMin)
-				{
-					break;
-				}
+				break;
 			}
-			fflush(stdin);
-			reintentosMax--;
-			printf(mensajeError);
 		}
+		fflush(stdin);
+		reintentosMax--;
+		printf(mensajeError);
+	}
 
-		if(reintentosMax > 0)
-		{
-			exitoFuncion = 0;
-			*pNumero = numero;
-		}
-
-		return exitoFuncion;
+	if(reintentosMax > 0)
+	{
+		exitoFuncion = 0;
+		*pNumero = numero;
+	}
 
 	return exitoFuncion;
 }
@@ -192,7 +192,6 @@ int utn_getCharDosOpciones(char* pChar, char* mensajeConOpciones, char* mensajeE
 {
 	int exitoFuncion = -1;
 	char letra;
-	int errores = 0;
 	opcionUno = tolower(opcionUno);
 	opcionDos = tolower(opcionDos);
 
@@ -201,14 +200,17 @@ int utn_getCharDosOpciones(char* pChar, char* mensajeConOpciones, char* mensajeE
 	scanf("%c", &letra);
 	letra = tolower(letra);
 
-	while(letra != opcionUno && letra != opcionDos && errores < reintentosMaximos)
+	while(letra != opcionUno && letra != opcionDos && reintentosMaximos > 0)
 	{
-		printf(mensajeError);
-		printf(mensajeConOpciones);
-		fflush(stdin);
-		scanf("%c", &letra);
-		letra = tolower(letra);
-		errores++;
+		reintentosMaximos--;
+		if(reintentosMaximos != 0)
+		{
+			printf(mensajeError);
+			printf(mensajeConOpciones);
+			fflush(stdin);
+			scanf("%c", &letra);
+			letra = tolower(letra);
+		}
 	}
 
 	if(letra == opcionUno)
@@ -228,7 +230,6 @@ int utn_getCharTresOpciones(char* pChar, char* mensajeConOpciones, char* mensaje
 {
 		int exitoFuncion = -1;
 		char letra;
-		int errores = 0;
 		opcionUno = tolower(opcionUno);
 		opcionDos = tolower(opcionDos);
 		opcionTres = tolower(opcionTres);
@@ -238,13 +239,17 @@ int utn_getCharTresOpciones(char* pChar, char* mensajeConOpciones, char* mensaje
 		scanf("%c", &letra);
 		letra = tolower(letra);
 
-		while(letra != opcionUno && letra != opcionDos && letra != opcionTres && errores < reintentosMaximos)
+		while(letra != opcionUno && letra != opcionDos && letra != opcionTres && reintentosMaximos > 0)
 		{
-			printf(mensajeError);
-			fflush(stdin);
-			scanf("%c", &letra);
-			letra = tolower(letra);
-			errores++;
+			reintentosMaximos--;
+			if(reintentosMaximos != 0)
+			{
+				printf(mensajeError);
+				fflush(stdin);
+				printf(mensajeConOpciones);
+				scanf("%c", &letra);
+				letra = tolower(letra);
+			}
 		}
 
 		if(letra == opcionUno)
@@ -266,6 +271,22 @@ int utn_getCharTresOpciones(char* pChar, char* mensajeConOpciones, char* mensaje
 }
 
 // STRING
+int esSpecialChar(char caracter)
+{
+	int exito = -1;
+	if(caracter == '!' || caracter == '@' || caracter == '#' || caracter == '$'
+	      || caracter == '%' || caracter == '^' || caracter == '&' || caracter == '*'
+	      || caracter == '(' || caracter == ')' || caracter == '-' || caracter == '{'
+	      || caracter == '}' || caracter == '[' || caracter == ']' || caracter == ':'
+	      || caracter == ';' || caracter == '"' || caracter == '\'' || caracter == '<'
+	      || caracter == '>' || caracter == '.' || caracter == '/' || caracter == '?'
+	      || caracter == '~' || caracter == '`' )
+	{
+		exito = 0;
+	}
+
+	return exito;
+}
 int esStringAlpha(char* cadena)
 {
 	int exitoFuncion = -1;
@@ -288,18 +309,25 @@ int esStringAlpha(char* cadena)
 }
 int esStringAlphaCompuesto(char* cadena)
 {
+
 	int exitoFuncion = -1;
 	int largoCadena = strlen(cadena);
 	int i;
+	int banderaEspacio = 0;
 	if(cadena != NULL && largoCadena > 0)
 	{
 		exitoFuncion = 0;
 		for(i = 0; i < largoCadena; i++)
 		{
-			if(isalpha(cadena[i]) == 0 && isspace(cadena[i]) == 0)
+			if(!isalpha(cadena[i]) && (isdigit(cadena[i]) || esSpecialChar(cadena[0]) == 0 || isspace(cadena[0]) || (isspace(cadena[i]) && banderaEspacio)))
 			{
 				exitoFuncion = -1;
 				break;
+			}
+
+			if(i > 0 && isspace(cadena[i]))
+			{
+				banderaEspacio = 1;
 			}
 		}
 	}
@@ -309,23 +337,25 @@ int esStringAlphaCompuesto(char* cadena)
 int utn_getStringLimited(char* pString, char* mensaje, char* mensajeError, int maximosCaracteres, int maximosErrores)
 {
 	int exitoFuncion = -1;
-	int errores = 1;
 	char auxString[200];
 
 	printf(mensaje);
 	fflush(stdin);
 	gets(auxString);
 
-	while((strlen(auxString) > maximosCaracteres || esStringAlpha(auxString) == -1) && errores <= maximosErrores)
+	while((strlen(auxString) > maximosCaracteres || esStringAlpha(auxString) == -1) && maximosErrores > 0)
 	{
-		printf(mensajeError);
-		printf(mensaje);
-		fflush(stdin);
-		errores++;
-		gets(auxString);
+		maximosErrores--;
+		if(maximosErrores != 0)
+		{
+			printf(mensajeError);
+			printf(mensaje);
+			fflush(stdin);
+			gets(auxString);
+		}
 	}
 
-	if(errores <= maximosErrores)
+	if(maximosErrores > 0)
 	{
 		strcpy(pString, auxString);
 		exitoFuncion = 0;
@@ -337,27 +367,27 @@ int utn_getStringCompuesto(char* pString, char* msj, char* msjError, int maxChar
 {
 	int exito = -1;
 	char auxString[200];
-
 	printf(msj);
 	fflush(stdin);
 	gets(auxString);
 
 	while((strlen(auxString) > maxChar || esStringAlphaCompuesto(auxString) == -1) && maxErr > 0)
+	{
+		maxErr--;
+		if(maxErr != 0)
 		{
 			printf(msjError);
 			printf(msj);
 			fflush(stdin);
-			maxErr--;
 			gets(auxString);
 		}
+	}
 
-		if(maxErr > 0)
-		{
-			strcpy(pString, auxString);
-			exito = 0;
-		}
-
-		return exito;
+	if(maxErr > 0)
+	{
+		strcpy(pString, auxString);
+		exito = 0;
+	}
 
 	return exito;
 }
@@ -372,9 +402,13 @@ int isStringMail(char* cadena)
 	int i;
 	if(cadena != NULL && largoCadena > 0)
 	{
+		//if((cadena[i] < '0' || cadena[i] > '9') && (cadena[i] != '.' || banderaFloatPoint == 1))
+
+		printf("\nEntro a if basico.");
 		exitoFuncion = 0;
 		for(i = 0; i < largoCadena; i++)
 		{
+			printf("\nCaracter a analizar: %c", cadena[i]);
 			if(((isspace(cadena[i]) != 0) ||
 			             cadena[i] == '!' || cadena[i] == '#' || cadena[i] == '$' ||
 						 cadena[i] == '%' || cadena[i] == '^' || cadena[i] == '&' || cadena[i] == '*' ||
@@ -384,6 +418,7 @@ int isStringMail(char* cadena)
 						 cadena[i] == '>' || cadena[i] == '/' || cadena[i] == '?' || cadena[i] == '~' ||
 						 cadena[i] == '`') || ((cadena[i] == '.' && banderaPunto == 1) || (cadena[i] == '@' && banderaArroba == 1)))
 			{
+				printf("\nRechaza caracter: %c", cadena[i]);
 				exitoFuncion = -1;
 				break;
 			} // Termina el if interno
@@ -391,11 +426,13 @@ int isStringMail(char* cadena)
 			// Cambia banderas
 			if(cadena[i] == '.')
 			{
+				printf("\nCambia bandera del punto.");
 				banderaPunto = 1;
 			}
 
 			if(cadena[i] == '@')
 			{
+				printf("\nCambia bandera del arroba.");
 				banderaArroba = 1;
 			}
 
@@ -404,6 +441,7 @@ int isStringMail(char* cadena)
 		// Analiza si hubo @ y . (obligatorios en mail)
 		if(banderaArroba == 0 || banderaPunto == 0)
 		{
+			printf("\nNo hay presencia de @ y/o .");
 			exitoFuncion = -1;
 		}
 	}
@@ -413,22 +451,24 @@ int isStringMail(char* cadena)
 int utn_getMailLimited(char* pString, char* mensaje, char* mensajeError, int maximosCaracteres, int reintentosMaximos)
 {
 	int exitoFuncion = -1;
-
-	int errores = 1;
 	char auxString[200];
 
 	printf(mensaje);
 	fflush(stdin);
 	gets(auxString);
-	while((strlen(auxString) > maximosCaracteres || isStringMail(auxString) == -1) && errores <= reintentosMaximos)
+
+	while((strlen(auxString) > maximosCaracteres || isStringMail(auxString) == -1) && reintentosMaximos > 0)
 	{
-		printf(mensajeError);
-		fflush(stdin);
-		gets(auxString);
-		errores++;
+		reintentosMaximos--;
+		if(reintentosMaximos != 0)
+		{
+			printf(mensajeError);
+			fflush(stdin);
+			gets(auxString);
+		}
 	}
 
-	if(errores <= reintentosMaximos)
+	if(reintentosMaximos > 0)
 	{
 		strcpy(pString, auxString);
 		exitoFuncion = 0;

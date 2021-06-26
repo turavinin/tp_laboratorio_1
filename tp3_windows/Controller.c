@@ -121,7 +121,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 						"\n| ----------------------------------------------------------------|"
 						"\n| Seleccione una opción (ingrese su número): ",
 						"\n|          ---- ¡LA OPCION INGRESADA ES INCORRECTA!----           |",
-						1, 3, 3);
+						1, 4, 3);
 			}
 
 			if(opcionId == 1)
@@ -207,66 +207,56 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_addEmployee(LinkedList* pArrayListEmployee)
 {
-    int exito = -1;
-    int exitoLocal = -1;
-    char opcionSalir;
-    Employee* newEmployee;
-    int auxId = 0;
-    char auxNombre[LARGO_CHAR];
-    int auxHsTrabajdas;
-    int auxSueldo;
+	int exito = -1;
+	Employee* newEmployee;
+	int auxId = 1;
+	char auxNombre[LARGO_CHAR];
+	int auxHsTrabajdas;
+	int auxSueldo;
 
-    do
-    {
-    	newEmployee = employee_new();
-    	printf("\n| AGREGAR EMPLEADO ------------------------|\n");
-    	if(utn_getStringLimited(auxNombre,
-				"| Ingrese el nombre: ",
-				"| -- Ingreso incorrecto --\n",
-				LARGO_CHAR, MAX_ERRORES) == 0 &&
-    			utn_getNumber(&auxHsTrabajdas,
-    					"| Ingrese las horas trabajadas: ",
-						"| -- Ingreso incorrecto --\n",
-						MAX_ERRORES) == 0 &&
-						utn_getNumber(&auxSueldo,
-								"| Ingrese el sueldo: ",
-								"| -- Ingreso incorrecto --\n",
-								MAX_ERRORES) == 0)
-    	{
-    		if(ll_len(pArrayListEmployee) > 0)
-    		{
-    			employee_getNextIdFromList(pArrayListEmployee, &auxId);
-    		}
-    		employee_setId(newEmployee, auxId);
-    		employee_setNombre(newEmployee, auxNombre);
-    		employee_setHorasTrabajadas(newEmployee, auxHsTrabajdas);
-    		employee_setSueldo(newEmployee, auxSueldo);
-    		exito = ll_add(pArrayListEmployee, newEmployee);
+	newEmployee = employee_new();
 
-    		if(exito == 0)
-    		{
-    			printf("\n|EMPLEADO DADO DE ALTA:");
-    			employee_getId(newEmployee, &auxId);
-    			prints_Employee(auxId, auxNombre, auxHsTrabajdas, auxSueldo, 1);
-    			exitoLocal = utn_getCharDosOpciones(&opcionSalir,
-    										"|¿Desea agregar empleado? (S / N): ",
-    										"| -- Ingreso incorrecto --\n",
-    										's', 'n', MAX_ERRORES);
-    			if(exitoLocal != 0)
-    			{
-    				opcionSalir = 'n';
-    			}
-    		}
-    	}
+	printf("\n| AGREGAR EMPLEADO ------------------------|\n");
+	if(utn_getStringCompuesto(auxNombre,
+			"| Ingrese el nombre: ",
+			"| -- Ingreso incorrecto --\n",
+			LARGO_CHAR, MAX_ERRORES) == 0 &&
+			utn_getNumber(&auxHsTrabajdas,
+					"| Ingrese las horas trabajadas: ",
+					"| -- Ingreso incorrecto --\n",
+					MAX_ERRORES) == 0 &&
+					utn_getNumber(&auxSueldo,
+							"| Ingrese el sueldo: ",
+							"| -- Ingreso incorrecto --\n",
+							MAX_ERRORES) == 0)
+	{
+		if(ll_len(pArrayListEmployee) > 0)
+		{
+			employee_getNextIdFromList(pArrayListEmployee, &auxId);
+		}
 
-    } while(opcionSalir != 'n' && exitoLocal == 0);
+		if(employee_setId(newEmployee, auxId) == 0 &&
+		employee_setNombre(newEmployee, auxNombre) == 0 &&
+		employee_setHorasTrabajadas(newEmployee, auxHsTrabajdas) == 0 &&
+		employee_setSueldo(newEmployee, auxSueldo) == 0)
+		{
+			exito = ll_add(pArrayListEmployee, newEmployee);
+		}
+
+		if(exito == 0)
+		{
+			printf("\n|EMPLEADO DADO DE ALTA:");
+			employee_getId(newEmployee, &auxId);
+			prints_Employee(auxId, auxNombre, auxHsTrabajdas, auxSueldo, 1);
+		}
+	}
 
 	if(exito != 0)
 	{
 		printf("\n// ¡NO SE PUDO DAR DE ALTA AL EMPLEADO!  //\n");
 	}
 
-    return exito;
+	return exito;
 }
 
 /** \brief Pide al usuario el ID del empleado por consola y devulve por parametro su INDEX.
@@ -423,7 +413,6 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
     int exito = -1;
     int index;
     char confirmacion = 'n';
-    Employee* auxEmployee;
 
     if(pArrayListEmployee != NULL && ll_len(pArrayListEmployee) > 0)
     {
@@ -435,22 +424,22 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
 
     	if(exito == 0)
     	{
-    		auxEmployee = ll_get(pArrayListEmployee, index);
-    		prints_Employee((*auxEmployee).id, (*auxEmployee).nombre, (*auxEmployee).horasTrabajadas, (*auxEmployee).sueldo, 1);
     		exito = utn_getCharDosOpciones(&confirmacion,
-    				"|¿Confirma la eliminación del contribuyente? (S / N): ",
+    				"|¿Confirma la eliminación del empleado? (S / N): ",
 					"| -- Ingreso incorrecto --\n",
 					's', 'n', MAX_ERRORES);
 
     		if(confirmacion == 's')
     		{
-    	    	ll_remove(pArrayListEmployee, index);
-    	    	printf("\n\n   ---- SE ELIMINO CORRECTAMENTE AL EMPELADO ----   \n\n");
-        		system("pause");
-
+    			if(employee_delete(ll_get(pArrayListEmployee, index)) == 0 && ll_remove(pArrayListEmployee, index) == 0 )
+    			{
+        	    	printf("\n\n   ---- SE ELIMINO CORRECTAMENTE AL EMPELADO ----   \n\n");
+            		system("pause");
+    			}
     		}
     	}
     }
+
     return exito;
 }
 
@@ -537,16 +526,39 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
 int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 {
     int exito = -1;
+    int opcionGuardado = 0;
 
     FILE* file;
     if(pArrayListEmployee != NULL)
     {
-    	file = fopen(path, "w");
-    	if(file != NULL)
+    	if(ll_len(pArrayListEmployee) == 0)
     	{
-    		exito = parser_EmployeeToText(file, pArrayListEmployee);
-    		fclose(file);
+    		exito = utn_getNumberLimited(&opcionGuardado,
+    				"\n| ---- ATENCION: NO HAY NINGUN DATO EN EL SISTEMA ---- |"
+    				"\n| ---- DESEA:                                          |"
+    				"\n| 1. Sobreescribir archivo                             |"
+    				"\n| 2. Cancelar                                          |"
+    				"\n| -----------------------------------------------------|"
+    				"\n| Seleccione una opción (ingrese su número): ",
+					"\n|  ---- ¡LA OPCION INGRESADA ES INCORRECTA!----        |",
+					1, 2, 3);
+
+    		if(exito == -1)
+    		{
+    			opcionGuardado = -1;
+    		}
+
     	}
+
+		if(opcionGuardado == 1 || opcionGuardado == 0)
+		{
+			file = fopen(path, "w");
+			if(file != NULL)
+			{
+				exito = parser_EmployeeToText(file, pArrayListEmployee);
+				fclose(file);
+			}
+		}
     }
 
     return exito;
@@ -561,20 +573,43 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
  */
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 {
-    int exito = -1;
+	int exito = -1;
+	int opcionGuardado = 0;
 
-    FILE* file;
-    if(pArrayListEmployee != NULL)
-    {
-    	file = fopen(path, "wb");
-    	if(file != NULL)
-    	{
-    		exito = parser_EmployeeToBin(file, pArrayListEmployee);
-    		fclose(file);
-    	}
-    }
+	FILE* file;
+	if(pArrayListEmployee != NULL)
+	{
+		if(ll_len(pArrayListEmployee) == 0)
+		{
+			exito = utn_getNumberLimited(&opcionGuardado,
+					"\n| ---- ATENCION: NO HAY NINGUN DATO EN EL SISTEMA ---- |"
+					"\n| ---- DESEA:                                          |"
+					"\n| 1. Sobreescribir archivo                             |"
+					"\n| 2. Cancelar                                          |"
+					"\n| -----------------------------------------------------|"
+					"\n| Seleccione una opción (ingrese su número): ",
+					"\n|  ---- ¡LA OPCION INGRESADA ES INCORRECTA!----        |",
+					1, 2, 3);
 
-    return exito;
+			if(exito == -1)
+			{
+				opcionGuardado = -1;
+			}
+
+		}
+
+		if(opcionGuardado == 1 || opcionGuardado == 0)
+		{
+			file = fopen(path, "wb");
+			if(file != NULL)
+			{
+				exito = parser_EmployeeToBin(file, pArrayListEmployee);
+				fclose(file);
+			}
+		}
+	}
+
+	return exito;
 }
 
 
