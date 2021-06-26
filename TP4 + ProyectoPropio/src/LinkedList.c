@@ -45,7 +45,6 @@ int ll_len(LinkedList* this)
     return returnAux;
 }
 
-
 /** \brief  Obtiene un nodo de la lista
  *
  * \param this LinkedList* Puntero a la lista
@@ -70,7 +69,6 @@ static Node* getNode(LinkedList* this, int nodeIndex)
     return nodo;
 }
 
-
 /** \brief  Permite realizar el test de la funcion getNode la cual es privada
  *
  * \param this LinkedList* Puntero a la lista
@@ -83,7 +81,6 @@ Node* test_getNode(LinkedList* this, int nodeIndex)
 {
     return getNode(this, nodeIndex);
 }
-
 
 /** \brief Agrega y enlaza un nuevo nodo a la lista
  *
@@ -145,7 +142,6 @@ int test_addNode(LinkedList* this, int nodeIndex,void* pElement)
     return addNode(this,nodeIndex,pElement);
 }
 
-
 /** \brief  Agrega un elemento a la lista
  * \param pList LinkedList* Puntero a la lista
  * \param pElement void* Puntero al elemento a ser agregado
@@ -184,7 +180,6 @@ void* ll_get(LinkedList* this, int index)
     return returnAux;
 }
 
-
 /** \brief Modifica un elemento de la lista
  *
  * \param this LinkedList* Puntero a la lista
@@ -207,7 +202,6 @@ int ll_set(LinkedList* this, int index,void* pElement)
 
     return returnAux;
 }
-
 
 /** \brief Elimina un elemento de la lista
  *
@@ -245,7 +239,6 @@ int ll_remove(LinkedList* this,int index)
     return returnAux;
 }
 
-
 /** \brief Elimina todos los elementos de la lista
  *
  * \param this LinkedList* Puntero a la lista
@@ -273,7 +266,6 @@ int ll_clear(LinkedList* this)
 
     return returnAux;
 }
-
 
 /** \brief Elimina todos los elementos de la lista y la lista
  *
@@ -360,7 +352,6 @@ int ll_push(LinkedList* this, int index, void* pElement)
     return returnAux;
 }
 
-
 /** \brief Elimina el elemento de la posicion indicada y retorna su puntero
  *
  * \param this LinkedList* Puntero a la lista
@@ -381,7 +372,6 @@ void* ll_pop(LinkedList* this,int index)
 
     return returnAux;
 }
-
 
 /** \brief  Determina si la lista contiene o no el elemento pasado como parametro
  *
@@ -463,8 +453,6 @@ LinkedList* ll_subList(LinkedList* this,int from,int to)
     return cloneArray;
 }
 
-
-
 /** \brief Crea y retorna una nueva lista con los elementos de la lista pasada como parametro
  *
  * \param pList LinkedList* Puntero a la lista
@@ -486,7 +474,6 @@ LinkedList* ll_clone(LinkedList* this)
 
     return cloneArray;
 }
-
 
 /** \brief Ordena los elementos de la lista utilizando la funcion criterio recibida como parametro
  * \param pList LinkedList* Puntero a la lista

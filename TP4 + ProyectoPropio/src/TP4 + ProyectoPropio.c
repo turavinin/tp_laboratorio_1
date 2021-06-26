@@ -87,5 +87,8 @@ int main()
     	}
 
     }while(opcionMenu != 10);
+
+    printf("\n|    --- ¡GRACIAS POR UTILIZAR EL PROGRAMA! ---     |\n");
+
     return 0;
 }
