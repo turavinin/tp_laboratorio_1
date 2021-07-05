@@ -127,7 +127,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 			if(opcionId == 1)
 			{
 				auxList = ll_clone(pArrayListEmployee);
-				exito = parser_EmployeeFromText(file, auxList);
+				exito = parser_EmployeeFromBinary(file, auxList);
 				if(exito == 0)
 				{
 					exito = employee_addListAndSetId(auxList, pArrayListEmployee);
@@ -137,7 +137,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 			else if(opcionId == 2)
 			{
 				auxList = ll_clone(pArrayListEmployee);
-				exito = parser_EmployeeFromText(file, pArrayListEmployee);
+				exito = parser_EmployeeFromBinary(file, pArrayListEmployee);
 				if(exito == 0)
 				{
 					exito = employee_addListAndSetId(auxList, pArrayListEmployee);
@@ -150,7 +150,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 			}
 			else if (opcionId == 3 || opcionId == 0)
 			{
-				exito = parser_EmployeeFromText(file, pArrayListEmployee);
+				exito = parser_EmployeeFromBinary(file, pArrayListEmployee);
 				fclose(file);
 			}
 			else

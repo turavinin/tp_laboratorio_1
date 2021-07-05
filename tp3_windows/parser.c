@@ -63,33 +63,30 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {
 	int exito = -1;
-	int camposStruct;
-	char buffer[CANT_STRUCT][128];
+	int cantidadLeida;
 	Employee* nuevoEmpleado = NULL;
 
-	fscanf(pFile, "%[^,], %[^,], %[^,], %[^\n]\n", buffer[0], buffer[1], buffer[2], buffer[3]);
-
-	while(!feof(pFile))
+	if(pFile != NULL && pArrayListEmployee != NULL)
 	{
-		camposStruct = fscanf(pFile, "%[^,], %[^,], %[^,], %[^\n]\n", buffer[0], buffer[1], buffer[2], buffer[3]);
-		if(camposStruct < CANT_STRUCT)
+		while(!feof(pFile))
 		{
-			break;
+			nuevoEmpleado = employee_new();
+			if(nuevoEmpleado != NULL)
+			{
+				cantidadLeida = fread(nuevoEmpleado, sizeof(Employee), 1, pFile);
+				if(cantidadLeida == 1)
+				{
+					ll_add(pArrayListEmployee,nuevoEmpleado);
+					exito = 0;
+				}
+				else
+				{
+					employee_delete(nuevoEmpleado);
+				    break;
+				}
+			}
 		}
-
-		nuevoEmpleado = employee_newParametros(buffer[0],buffer[1], buffer[2], buffer[3]);
-		if(nuevoEmpleado != NULL)
-		{
-			ll_add(pArrayListEmployee, nuevoEmpleado);
-		}
-
 	}
-
-	if(ll_len(pArrayListEmployee) > 0)
-	{
-		exito = 0;
-	}
-
 	return exito;
 }
 
@@ -141,27 +138,25 @@ int parser_EmployeeToBin(FILE* pFile, LinkedList* pArrayListEmployee)
 {
 	int exito = -1;
 	int largoLL = ll_len(pArrayListEmployee);
-
+	int cantidadLeida;
 	Employee* auxEmployee = NULL;
-	int id;
-	char nombre[LARGO_CHAR];
-	int hsTrabajadas;
-	int sueldo;
 
-	if(pFile != NULL && largoLL > 0)
+	if(pFile != NULL && pArrayListEmployee != NULL)
 	{
-		fprintf(pFile, "id,nombre,horasTrabajadas,sueldo\n");
 		for(int i = 0; i < largoLL; i++)
 		{
 			auxEmployee = ll_get(pArrayListEmployee, i);
-	    	employee_getId(auxEmployee, &id);
-	    	employee_getNombre(auxEmployee, nombre);
-	    	employee_getHorasTrabajadas(auxEmployee, &hsTrabajadas);
-	    	employee_getSueldo(auxEmployee, &sueldo);
-	    	fprintf(pFile, "%d, %s, %d, %d\n", id, nombre, hsTrabajadas, sueldo);
-
+			cantidadLeida = fwrite(auxEmployee, sizeof(Employee), 1, pFile);
+			if(cantidadLeida != 1)
+			{
+				employee_delete(auxEmployee);
+				break;
+			}
+			else
+			{
+				exito = 0;
+			}
 		}
-		exito = 0;
 	}
 
 	return exito;

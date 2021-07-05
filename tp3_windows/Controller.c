@@ -126,8 +126,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 
 			if(opcionId == 1)
 			{
-				auxList = ll_clone(pArrayListEmployee);
-				exito = parser_EmployeeFromText(file, auxList);
+				exito = parser_EmployeeFromBinary(file, auxList);
 				if(exito == 0)
 				{
 					exito = employee_addListAndSetId(auxList, pArrayListEmployee);
@@ -137,7 +136,8 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 			else if(opcionId == 2)
 			{
 				auxList = ll_clone(pArrayListEmployee);
-				exito = parser_EmployeeFromText(file, pArrayListEmployee);
+				ll_clear(pArrayListEmployee);
+				exito = parser_EmployeeFromBinary(file, pArrayListEmployee);
 				if(exito == 0)
 				{
 					exito = employee_addListAndSetId(auxList, pArrayListEmployee);
@@ -150,7 +150,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 			}
 			else if (opcionId == 3 || opcionId == 0)
 			{
-				exito = parser_EmployeeFromText(file, pArrayListEmployee);
+				exito = parser_EmployeeFromBinary(file, pArrayListEmployee);
 				fclose(file);
 			}
 			else
@@ -269,7 +269,7 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
  * \param mensajeNoEncontrado char*
  * \param index int*
  * \param maxErrores int
- * \return int (-1 => si hubo errores // 0 => si salió bien)
+ * \return int (-1 => si hubo errores // 0 => si salió bien // 1 => Si no se encontró al empleado)
  *
  */
 int controller_getPosByIdFromConsole(LinkedList* pArrayListEmployee, char* mensaje, char* mensajeError, char* mensajeNoEncontrado, int* index, int maxErrores)
@@ -302,6 +302,7 @@ int controller_getPosByIdFromConsole(LinkedList* pArrayListEmployee, char* mensa
 			if(exitoLocal == -1)
 			{
 				printf(mensajeNoEncontrado);
+				exito = 1;
 			}
 		}
 	}
@@ -327,27 +328,28 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
     {
     	do
     	{
-    		exito = utn_getNumberLimited(&opcionEditar,
-    				"\n| MODIFICAR EMPLEADO ------------------------|"
-    				"\n| 1.Modificar nombre                         |"
-    				"\n| 2.Modificar horas trabajadas               |"
-    				"\n| 3.Modificar sueldo                         |"
-    				"\n| 4.Cancelar                                 |"
-    				"\n|--------------------------------------------|"
-    				"\n| Selecciones una opcion: ",
-					"\n|          // OPCION INCORRECTA //           |",
-					1, 4, MAX_ERRORES);
+    		controller_ListEmployee(pArrayListEmployee);
+    		exito =  controller_getPosByIdFromConsole(pArrayListEmployee,
+    				"\n| Ingrese el ID del empleado: ",
+					"| -- Error.",
+					"\n\n   ---- NO SE ENCONTRO AL EMPLEADO BUSCADO ----   \n\n", &indexEmployee, MAX_ERRORES);
 
-    		if(exito == 0 && opcionEditar != 4)
+    		if(exito == 0)
     		{
-    			controller_ListEmployee(pArrayListEmployee);
-    			exito =  controller_getPosByIdFromConsole(pArrayListEmployee,
-    					"\n| Ingrese el ID del empleado: ",
-						"| -- Error.",
-						"\n\n   ---- NO SE ENCONTRO AL EMPLEADO BUSCADO ----   \n\n", &indexEmployee, MAX_ERRORES);
+    			exito = utn_getNumberLimited(&opcionEditar,
+    					"\n| MODIFICAR EMPLEADO ------------------------|"
+    					"\n| 1.Modificar nombre                         |"
+    					"\n| 2.Modificar horas trabajadas               |"
+    					"\n| 3.Modificar sueldo                         |"
+    					"\n| 4.Cancelar                                 |"
+    					"\n|--------------------------------------------|"
+    					"\n| Selecciones una opcion: ",
+						"\n|          // OPCION INCORRECTA //           |",
+						1, 4, MAX_ERRORES);
 
-    			if(exito == 0)
+    			if(exito == 0 && opcionEditar != 4)
     			{
+
     				employee = ll_get(pArrayListEmployee, indexEmployee);
     				switch(opcionEditar)
     				{
@@ -378,14 +380,14 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
     				}
     			}
     		}
-    	} while(exito != 0 || opcionEditar != 4);
+    	} while((exito != 0 || opcionEditar != 4) && exito != 1);
 
     	if(exito != 0)
     	{
-    		printf("\n\n    ---- NO FUE POSIBLE MODIFICAR AL EMPLEADO ----\n\n");
+    		printf("\n    ---- NO FUE POSIBLE MODIFICAR AL EMPLEADO ----\n\n");
     		system("pause");
     	}
-    	else
+    	else if(exito == 0 && opcionEditar != 4)
     	{
     		printf("\n| EL EMPLEADO FUE EDITADO CORRECTAMENTE:");
     		prints_Employee((*employee).id, (*employee).nombre, (*employee).horasTrabajadas, (*employee).sueldo, 1);
